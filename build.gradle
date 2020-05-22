@@ -12,6 +12,7 @@ buildscript {
 }
 
 plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.9.1"
     id "org.jlleitschuh.gradle.ktlint" version "9.2.1"
 }
 
@@ -24,6 +25,21 @@ allprojects {
 
 subprojects {
     apply plugin: "org.jlleitschuh.gradle.ktlint"
+}
+
+detekt {
+    config = files("detekt.yml")
+    input = files("app/src/main/java",)
+    reports {
+        xml {
+            enabled = true
+            destination = file("app/build/reports/detekt/detekt.xml")
+        }
+        html {
+            enabled = true
+            destination = file("app/build/reports/detekt/detekt.html")
+        }
+    }
 }
 
 task clean(type: Delete) {
