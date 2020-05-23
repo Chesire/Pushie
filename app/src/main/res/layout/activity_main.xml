@@ -35,7 +35,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/days_expiry_text"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/viewsTextView"
         app:layout_constraintTop_toBottomOf="@id/passwordLayout" />
 
     <NumberPicker
@@ -53,7 +55,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/views_expiry_text"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/daysTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/passwordLayout" />
 
     <NumberPicker
