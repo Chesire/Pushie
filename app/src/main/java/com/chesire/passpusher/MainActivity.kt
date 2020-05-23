@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.chesire.passpusher.databinding.ActivityMainBinding
 
 private const val DAYS_PICKER_BUNDLE_KEY = "DAYS_PICKER_BUNDLE_KEY"
+private const val VIEWS_PICKER_BUNDLE_KEY = "VIEWS_PICKER_BUNDLE_KEY"
 
 /**
  * The main activity for the application.
@@ -26,10 +27,16 @@ class MainActivity : AppCompatActivity() {
             maxValue = 90
             value = savedInstanceState?.getInt(DAYS_PICKER_BUNDLE_KEY) ?: 7
         }
+        binding.viewsPicker.apply {
+            minValue = 1
+            maxValue = 100
+            value = savedInstanceState?.getInt(VIEWS_PICKER_BUNDLE_KEY) ?: 5
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(DAYS_PICKER_BUNDLE_KEY, binding.daysPicker.value)
+        outState.putInt(VIEWS_PICKER_BUNDLE_KEY, binding.viewsPicker.value)
         super.onSaveInstanceState(outState)
     }
 }
