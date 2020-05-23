@@ -1,0 +1,46 @@
+buildscript {
+    ext.kotlin_version = "1.3.72"
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:3.6.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.9.1"
+    id "org.jlleitschuh.gradle.ktlint" version "9.2.1"
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+subprojects {
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
+}
+
+detekt {
+    config = files("detekt.yml")
+    input = files("app/src/main/java",)
+    reports {
+        xml {
+            enabled = true
+            destination = file("app/build/reports/detekt/detekt.xml")
+        }
+        html {
+            enabled = true
+            destination = file("app/build/reports/detekt/detekt.html")
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
