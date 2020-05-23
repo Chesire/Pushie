@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PassPusher</string>
+    <string name="password_hint">Enter password</string>
 </resources>
