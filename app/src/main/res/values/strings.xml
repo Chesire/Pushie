@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PassPusher</string>
     <string name="password_hint">Enter password</string>
+    <string name="days_expiry_text">Expiry time in days</string>
 </resources>
