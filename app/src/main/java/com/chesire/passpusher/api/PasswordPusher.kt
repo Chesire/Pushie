@@ -1,5 +1,7 @@
 package com.chesire.passpusher.api
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -26,23 +28,25 @@ class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
         val request = createRequest(body)
 
         return try {
-            client.newCall(request)
-                .execute()
-                .use { response ->
-                    if (response.isSuccessful) {
-                        val bodyString = response.body?.string()
-                        if (bodyString == null) {
-                            createFailureResult(response.code)
+            withContext(Dispatchers.IO) {
+                client.newCall(request)
+                    .execute()
+                    .use { response ->
+                        if (response.isSuccessful) {
+                            val bodyString = response.body?.string()
+                            if (bodyString == null) {
+                                createFailureResult(response.code)
+                            } else {
+                                PasswordAPI.SendPasswordResult(
+                                    response.code,
+                                    createPushedModel(bodyString)
+                                )
+                            }
                         } else {
-                            PasswordAPI.SendPasswordResult(
-                                response.code,
-                                createPushedModel(bodyString)
-                            )
+                            createFailureResult(response.code)
                         }
-                    } else {
-                        createFailureResult(response.code)
                     }
-                }
+            }
         } catch (exception: IOException) {
             createFailureResult()
         }
