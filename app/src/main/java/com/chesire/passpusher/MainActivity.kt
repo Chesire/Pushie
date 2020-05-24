@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             maxValue = 100
             value = savedInstanceState?.getInt(VIEWS_PICKER_BUNDLE_KEY) ?: 5
         }
-        binding.press.setOnClickListener {
+        binding.sendButton.setOnClickListener {
             viewModel.sendApiRequest(
                 binding.passwordEditText.text.toString(),
                 binding.daysPicker.value,
