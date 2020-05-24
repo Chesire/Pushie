@@ -5,6 +5,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -31,24 +32,26 @@ class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
             withContext(Dispatchers.IO) {
                 client.newCall(request)
                     .execute()
-                    .use { response ->
-                        if (response.isSuccessful) {
-                            val bodyString = response.body?.string()
-                            if (bodyString == null) {
-                                createFailureResult(response.code)
-                            } else {
-                                PasswordAPI.SendPasswordResult(
-                                    response.code,
-                                    createPushedModel(bodyString)
-                                )
-                            }
-                        } else {
-                            createFailureResult(response.code)
-                        }
-                    }
+                    .use { parseResponse(it) }
             }
         } catch (exception: IOException) {
             createFailureResult()
+        }
+    }
+
+    private fun parseResponse(response: Response): PasswordAPI.SendPasswordResult {
+        return if (response.isSuccessful) {
+            val bodyString = response.body?.string()
+            if (bodyString == null) {
+                createFailureResult(response.code)
+            } else {
+                PasswordAPI.SendPasswordResult(
+                    response.code,
+                    createPushedModel(bodyString)
+                )
+            }
+        } else {
+            createFailureResult(response.code)
         }
     }
 
