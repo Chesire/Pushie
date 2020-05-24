@@ -22,12 +22,8 @@ class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
     ): PasswordAPI.SendPasswordResult {
         if (password.isBlank()) throw InvalidParameterException("Password cannot be a blank string")
 
-        val body = makeRequestString(password, expiryDays, expiryViews).toRequestBody()
-        val request = Request.Builder()
-            .url(PWPUSH_URL)
-            .addHeader("Content-Type", "application/json")
-            .post(body)
-            .build()
+        val body = createRequestString(password, expiryDays, expiryViews)
+        val request = createRequest(body)
 
         return try {
             client.newCall(request)
@@ -36,23 +32,23 @@ class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
                     if (response.isSuccessful) {
                         val bodyString = response.body?.string()
                         if (bodyString == null) {
-                            PasswordAPI.SendPasswordResult(response.code, null)
+                            createFailureResult(response.code)
                         } else {
                             PasswordAPI.SendPasswordResult(
                                 response.code,
-                                makePushedModel(bodyString)
+                                createPushedModel(bodyString)
                             )
                         }
                     } else {
-                        PasswordAPI.SendPasswordResult(response.code, null)
+                        createFailureResult(response.code)
                     }
                 }
         } catch (exception: IOException) {
-            PasswordAPI.SendPasswordResult(HttpURLConnection.HTTP_INTERNAL_ERROR, null)
+            createFailureResult()
         }
     }
 
-    private fun makeRequestString(password: String, expiryDays: Int, expiryViews: Int): String {
+    private fun createRequestString(password: String, expiryDays: Int, expiryViews: Int): String {
         return JSONObject(
             mapOf(
                 "password" to JSONObject(
@@ -66,7 +62,17 @@ class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
         ).toString()
     }
 
-    private fun makePushedModel(jsonBody: String): PushedModel? = try {
+    private fun createRequest(body: String) = Request.Builder()
+        .url(PWPUSH_URL)
+        .addHeader("Content-Type", "application/json")
+        .post(body.toRequestBody())
+        .build()
+
+    private fun createFailureResult(
+        statusCode: Int = HttpURLConnection.HTTP_INTERNAL_ERROR
+    ): PasswordAPI.SendPasswordResult = PasswordAPI.SendPasswordResult(statusCode, null)
+
+    private fun createPushedModel(jsonBody: String): PushedModel? = try {
         with(JSONObject(jsonBody)) {
             PushedModel(
                 getInt("id"),
