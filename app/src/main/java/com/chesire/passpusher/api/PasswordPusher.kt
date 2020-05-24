@@ -67,9 +67,13 @@ class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
     }
 
     private fun makePushedModel(jsonBody: String): PushedModel? = try {
-        val jsonObject = JSONObject(jsonBody)
-        val token = jsonObject.get("url_token") as String
-        PushedModel(token)
+        with(JSONObject(jsonBody)) {
+            PushedModel(
+                getInt("id"),
+                getString("url_token"),
+                getString("created_at")
+            )
+        }
     } catch (exception: JSONException) {
         null
     }
