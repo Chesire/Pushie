@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+                    @Suppress("UNCHECKED_CAST")
                     MainViewModel(passwordApi) as T
                 } else {
                     throw IllegalArgumentException("ViewModel Not Found")
