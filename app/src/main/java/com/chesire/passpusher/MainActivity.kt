@@ -1,8 +1,13 @@
 package com.chesire.passpusher
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.chesire.passpusher.api.PasswordPusher
 import com.chesire.passpusher.databinding.ActivityMainBinding
+import okhttp3.OkHttpClient
 
 private const val DAYS_PICKER_BUNDLE_KEY = "DAYS_PICKER_BUNDLE_KEY"
 private const val VIEWS_PICKER_BUNDLE_KEY = "VIEWS_PICKER_BUNDLE_KEY"
@@ -12,6 +17,18 @@ private const val VIEWS_PICKER_BUNDLE_KEY = "VIEWS_PICKER_BUNDLE_KEY"
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: MainViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            private val okHttpClient = OkHttpClient()
+            private val passwordApi = PasswordPusher(okHttpClient)
+
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return MainViewModel(passwordApi) as T
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +48,13 @@ class MainActivity : AppCompatActivity() {
             minValue = 1
             maxValue = 100
             value = savedInstanceState?.getInt(VIEWS_PICKER_BUNDLE_KEY) ?: 5
+        }
+        binding.press.setOnClickListener {
+            viewModel.sendApiRequest(
+                binding.passwordEditText.text.toString(),
+                binding.daysPicker.value,
+                binding.viewsPicker.value
+            )
         }
     }
 
