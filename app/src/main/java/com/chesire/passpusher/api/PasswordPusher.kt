@@ -1,7 +1,5 @@
 package com.chesire.passpusher.api
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -27,25 +25,28 @@ class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
         val body = makeRequestString(password, expiryDays, expiryViews).toRequestBody()
         val request = Request.Builder()
             .url(PWPUSH_URL)
+            .addHeader("Content-Type", "application/json")
             .post(body)
             .build()
 
         return try {
-            withContext(Dispatchers.IO) {
-                client.newCall(request)
-                    .execute()
-                    .use { response ->
-                        if (response.isSuccessful) {
-                            val bodyString = response.body.toString()
+            client.newCall(request)
+                .execute()
+                .use { response ->
+                    if (response.isSuccessful) {
+                        val bodyString = response.body?.string()
+                        if (bodyString == null) {
+                            PasswordAPI.SendPasswordResult(response.code, null)
+                        } else {
                             PasswordAPI.SendPasswordResult(
                                 response.code,
                                 makePushedModel(bodyString)
                             )
-                        } else {
-                            PasswordAPI.SendPasswordResult(response.code, null)
                         }
+                    } else {
+                        PasswordAPI.SendPasswordResult(response.code, null)
                     }
-            }
+                }
         } catch (exception: IOException) {
             PasswordAPI.SendPasswordResult(HttpURLConnection.HTTP_INTERNAL_ERROR, null)
         }
@@ -54,9 +55,13 @@ class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
     private fun makeRequestString(password: String, expiryDays: Int, expiryViews: Int): String {
         return JSONObject(
             mapOf(
-                "payload" to password,
-                "expire_after_days" to expiryDays,
-                "expire_after_views" to expiryViews
+                "password" to JSONObject(
+                    mapOf(
+                        "payload" to password,
+                        "expire_after_days" to expiryDays,
+                        "expire_after_views" to expiryViews
+                    )
+                )
             )
         ).toString()
     }
