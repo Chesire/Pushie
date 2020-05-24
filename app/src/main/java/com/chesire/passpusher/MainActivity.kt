@@ -1,8 +1,10 @@
 package com.chesire.passpusher
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.passpusher.api.PasswordPusher
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initializeViews(savedInstanceState)
+        initializeViewModel()
     }
 
     private fun initializeViews(savedInstanceState: Bundle?) {
@@ -56,6 +59,21 @@ class MainActivity : AppCompatActivity() {
                 binding.viewsPicker.value
             )
         }
+    }
+
+    private fun initializeViewModel() {
+        viewModel.apiState.observe(this, Observer { state ->
+            when (state) {
+                MainViewModel.ApiState.InProgress -> {
+                    binding.sendButton.visibility = View.INVISIBLE
+                    binding.sendProgress.visibility = View.VISIBLE
+                }
+                MainViewModel.ApiState.Complete -> {
+                    binding.sendButton.visibility = View.VISIBLE
+                    binding.sendProgress.visibility = View.INVISIBLE
+                }
+            }
+        })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

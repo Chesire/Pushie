@@ -69,14 +69,29 @@
         app:layout_constraintStart_toStartOf="@id/viewsTextView"
         app:layout_constraintTop_toBottomOf="@id/viewsTextView" />
 
-    <Button
-        android:id="@+id/sendButton"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="@string/main_send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewsPicker" />
+        app:layout_constraintTop_toBottomOf="@id/viewsPicker">
+
+        <Button
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/main_send" />
+
+        <ProgressBar
+            android:id="@+id/sendProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="?attr/colorPrimary"
+            android:visibility="invisible" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
