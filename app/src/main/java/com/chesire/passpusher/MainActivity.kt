@@ -1,5 +1,7 @@
 package com.chesire.passpusher
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -24,10 +26,11 @@ class MainActivity : AppCompatActivity() {
         object : ViewModelProvider.Factory {
             private val okHttpClient = OkHttpClient()
             private val passwordApi = PasswordPusher(okHttpClient)
+            private val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return MainViewModel(passwordApi) as T
+                return MainViewModel(passwordApi, clipboard) as T
             }
         }
     }
@@ -65,15 +68,26 @@ class MainActivity : AppCompatActivity() {
         viewModel.apiState.observe(this, Observer { state ->
             when (state) {
                 MainViewModel.ApiState.InProgress -> {
-                    binding.sendButton.visibility = View.INVISIBLE
-                    binding.sendProgress.visibility = View.VISIBLE
+                    setLoadingIndicatorState(true)
                 }
-                MainViewModel.ApiState.Complete -> {
-                    binding.sendButton.visibility = View.VISIBLE
-                    binding.sendProgress.visibility = View.INVISIBLE
+                MainViewModel.ApiState.Success -> {
+                    setLoadingIndicatorState(false)
+                }
+                MainViewModel.ApiState.Failure -> {
+                    setLoadingIndicatorState(false)
                 }
             }
         })
+    }
+
+    private fun setLoadingIndicatorState(visible: Boolean) {
+        if (visible) {
+            binding.sendButton.visibility = View.INVISIBLE
+            binding.sendProgress.visibility = View.VISIBLE
+        } else {
+            binding.sendButton.visibility = View.VISIBLE
+            binding.sendProgress.visibility = View.INVISIBLE
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
