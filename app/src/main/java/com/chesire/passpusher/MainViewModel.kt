@@ -27,7 +27,9 @@ class MainViewModel(private val passwordPusher: PasswordAPI) : ViewModel() {
         _apiState.postValue(ApiState.InProgress)
         viewModelScope.launch {
             val result = passwordPusher.sendPassword(password, expiryDays, expiryViews)
-            _apiState.postValue(ApiState.Complete)
+            result.model?.let {
+                _apiState.postValue(ApiState.Success)
+            } ?: _apiState.postValue(ApiState.Failure)
         }
     }
 
@@ -36,6 +38,7 @@ class MainViewModel(private val passwordPusher: PasswordAPI) : ViewModel() {
      */
     enum class ApiState {
         InProgress,
-        Complete
+        Success,
+        Failure
     }
 }

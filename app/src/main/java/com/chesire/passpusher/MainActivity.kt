@@ -65,15 +65,26 @@ class MainActivity : AppCompatActivity() {
         viewModel.apiState.observe(this, Observer { state ->
             when (state) {
                 MainViewModel.ApiState.InProgress -> {
-                    binding.sendButton.visibility = View.INVISIBLE
-                    binding.sendProgress.visibility = View.VISIBLE
+                    setLoadingIndicatorState(true)
                 }
-                MainViewModel.ApiState.Complete -> {
-                    binding.sendButton.visibility = View.VISIBLE
-                    binding.sendProgress.visibility = View.INVISIBLE
+                MainViewModel.ApiState.Success -> {
+                    setLoadingIndicatorState(false)
+                }
+                MainViewModel.ApiState.Failure -> {
+                    setLoadingIndicatorState(false)
                 }
             }
         })
+    }
+
+    private fun setLoadingIndicatorState(visible: Boolean) {
+        if (visible) {
+            binding.sendButton.visibility = View.INVISIBLE
+            binding.sendProgress.visibility = View.VISIBLE
+        } else {
+            binding.sendButton.visibility = View.VISIBLE
+            binding.sendProgress.visibility = View.INVISIBLE
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
