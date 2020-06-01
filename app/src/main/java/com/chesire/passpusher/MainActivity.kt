@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.passpusher.api.PasswordPusher
 import com.chesire.passpusher.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import okhttp3.OkHttpClient
 
 private const val DAYS_PICKER_BUNDLE_KEY = "DAYS_PICKER_BUNDLE_KEY"
@@ -67,14 +68,18 @@ class MainActivity : AppCompatActivity() {
     private fun initializeViewModel() {
         viewModel.apiState.observe(this, Observer { state ->
             when (state) {
-                MainViewModel.ApiState.InProgress -> {
-                    setLoadingIndicatorState(true)
-                }
+                MainViewModel.ApiState.InProgress -> setLoadingIndicatorState(true)
                 MainViewModel.ApiState.Success -> {
                     setLoadingIndicatorState(false)
+                    Snackbar
+                        .make(binding.root, R.string.result_success, Snackbar.LENGTH_LONG)
+                        .show()
                 }
                 MainViewModel.ApiState.Failure -> {
                     setLoadingIndicatorState(false)
+                    Snackbar
+                        .make(binding.root, R.string.result_failure, Snackbar.LENGTH_LONG)
+                        .show()
                 }
             }
         })
