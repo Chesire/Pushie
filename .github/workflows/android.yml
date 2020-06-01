@@ -21,7 +21,7 @@ jobs:
       run: ./gradlew ktlintCheck
     - name: Run lint
       run: ./gradlew lintDebug
-    - name: Detekt all
-      uses: natiginfo/action-detekt-all@1.9.1
+    - name: Run detekt
+      run: ./gradlew detekt
     - name: Build with Gradle
       run: ./gradlew assembleDebug
