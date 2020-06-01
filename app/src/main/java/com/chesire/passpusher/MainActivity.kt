@@ -4,6 +4,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                 binding.daysPicker.value,
                 binding.viewsPicker.value
             )
+            closeKeyboard()
         }
     }
 
@@ -99,5 +101,12 @@ class MainActivity : AppCompatActivity() {
         outState.putInt(DAYS_PICKER_BUNDLE_KEY, binding.daysPicker.value)
         outState.putInt(VIEWS_PICKER_BUNDLE_KEY, binding.viewsPicker.value)
         super.onSaveInstanceState(outState)
+    }
+
+    private fun closeKeyboard() {
+        currentFocus?.let {
+            (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
+                ?.hideSoftInputFromWindow(it.windowToken, 0)
+        }
     }
 }
