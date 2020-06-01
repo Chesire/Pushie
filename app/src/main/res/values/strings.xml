@@ -4,4 +4,6 @@
     <string name="days_expiry_text">Days till expiry</string>
     <string name="views_expiry_text">Views till expiry</string>
     <string name="main_send">Send</string>
+    <string name="result_success">Result copied to clipboard</string>
+    <string name="result_failure">Request failed, please try again…</string>
 </resources>

@@ -26,10 +26,10 @@ class MainViewModel(
         get() = _apiState
 
     /**
-     * Send the current details up to the api.
+     * Send the current details up to the api, result will be synced along the [apiState] live data.
      */
     fun sendApiRequest(password: String, expiryDays: Int, expiryViews: Int) {
-        // check password isn't blank
+        // TODO: check password isn't blank
         _apiState.postValue(ApiState.InProgress)
         viewModelScope.launch {
             val result = passwordPusher.sendPassword(password, expiryDays, expiryViews)
