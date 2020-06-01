@@ -1,5 +1,7 @@
 package com.chesire.passpusher
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -24,10 +26,11 @@ class MainActivity : AppCompatActivity() {
         object : ViewModelProvider.Factory {
             private val okHttpClient = OkHttpClient()
             private val passwordApi = PasswordPusher(okHttpClient)
+            private val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return MainViewModel(passwordApi) as T
+                return MainViewModel(passwordApi, clipboard) as T
             }
         }
     }
