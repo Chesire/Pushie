@@ -21,6 +21,7 @@ private const val PWPUSH_ENDPOINT = "$PWPUSH_BASE.json"
 class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
     override fun createPasswordUrl(token: String) = "$PWPUSH_BASE/$token"
 
+    @Suppress("SwallowedException")
     override suspend fun sendPassword(
         password: String,
         expiryDays: Int,
@@ -82,6 +83,7 @@ class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
         statusCode: Int = HttpURLConnection.HTTP_INTERNAL_ERROR
     ): PasswordAPI.SendPasswordResult = PasswordAPI.SendPasswordResult(statusCode, null)
 
+    @Suppress("SwallowedException")
     private fun createPushedModel(jsonBody: String): PushedModel? = try {
         with(JSONObject(jsonBody)) {
             PushedModel(
