@@ -17,5 +17,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Run ktlint
+      run: ./gradlew ktlintCheck
+    - name: Run lint
+      run: ./gradlew lintDebug
+    - name: Detekt all
+      uses: natiginfo/action-detekt-all@1.9.1
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew assembleDebug
