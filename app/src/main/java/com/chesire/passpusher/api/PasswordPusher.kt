@@ -12,12 +12,15 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.security.InvalidParameterException
 
-private const val PWPUSH_URL = "https://pwpush.com/p.json"
+private const val PWPUSH_BASE = "https://pwpush.com/p"
+private const val PWPUSH_ENDPOINT = "$PWPUSH_BASE.json"
 
 /**
  * Implementation of the [PasswordAPI] to interact with `pwpush.com`.
  */
 class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
+    override fun createPasswordUrl(token: String) = "$PWPUSH_BASE/$token"
+
     override suspend fun sendPassword(
         password: String,
         expiryDays: Int,
@@ -70,7 +73,7 @@ class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
     }
 
     private fun createRequest(body: String) = Request.Builder()
-        .url(PWPUSH_URL)
+        .url(PWPUSH_ENDPOINT)
         .addHeader("Content-Type", "application/json")
         .post(body.toRequestBody())
         .build()

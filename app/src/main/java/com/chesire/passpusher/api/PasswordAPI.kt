@@ -4,6 +4,12 @@ package com.chesire.passpusher.api
  * Provides methods for pushing passwords up to an API.
  */
 interface PasswordAPI {
+
+    /**
+     * Creates the full url to be copied to the clipboard, using the [token] where appropriate.
+     */
+    fun createPasswordUrl(token: String): String
+
     /**
      * Sends [password] up to the API.
      * The expiry time in days can be configured by passing a value to [expiryDays].
