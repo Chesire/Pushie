@@ -49,11 +49,6 @@ class MainActivity : AppCompatActivity() {
         handleIntent(intent)
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        intent?.let { handleIntent(intent) }
-    }
-
     private fun handleIntent(intent: Intent) {
         if (intent.action != Intent.ACTION_PROCESS_TEXT) return
 
