@@ -68,23 +68,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeViewModel() {
-        viewModel.apiState.observe(this, Observer { state ->
-            when (state) {
-                MainViewModel.ApiState.InProgress -> setLoadingIndicatorState(true)
-                MainViewModel.ApiState.Success -> {
-                    setLoadingIndicatorState(false)
-                    Snackbar
-                        .make(binding.root, R.string.result_success, Snackbar.LENGTH_LONG)
-                        .show()
-                }
-                MainViewModel.ApiState.Failure -> {
-                    setLoadingIndicatorState(false)
-                    Snackbar
-                        .make(binding.root, R.string.result_failure, Snackbar.LENGTH_LONG)
-                        .show()
+        viewModel.apiState.observe(
+            this,
+            Observer { state ->
+                when (state) {
+                    MainViewModel.ApiState.InProgress -> setLoadingIndicatorState(true)
+                    MainViewModel.ApiState.Success -> {
+                        setLoadingIndicatorState(false)
+                        Snackbar
+                            .make(binding.root, R.string.result_success, Snackbar.LENGTH_LONG)
+                            .show()
+                    }
+                    MainViewModel.ApiState.Failure -> {
+                        setLoadingIndicatorState(false)
+                        Snackbar
+                            .make(binding.root, R.string.result_failure, Snackbar.LENGTH_LONG)
+                            .show()
+                    }
                 }
             }
-        })
+        )
     }
 
     private fun setLoadingIndicatorState(visible: Boolean) {
