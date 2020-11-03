@@ -2,6 +2,7 @@ package com.chesire.passpusher
 
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -44,6 +45,20 @@ class MainActivity : AppCompatActivity() {
 
         initializeViews(savedInstanceState)
         initializeViewModel()
+
+        handleIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.let { handleIntent(intent) }
+    }
+
+    private fun handleIntent(intent: Intent) {
+        if (intent.action != Intent.ACTION_PROCESS_TEXT) return
+
+        val text = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)
+        binding.passwordEditText.setText(text)
     }
 
     private fun initializeViews(savedInstanceState: Bundle?) {
