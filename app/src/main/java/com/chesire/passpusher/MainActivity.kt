@@ -2,9 +2,9 @@ package com.chesire.passpusher
 
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.passpusher.api.PasswordPusher
 import com.chesire.passpusher.databinding.ActivityMainBinding
+import com.chesire.passpusher.extension.closeKeyboard
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.OkHttpClient
 
@@ -44,6 +45,15 @@ class MainActivity : AppCompatActivity() {
 
         initializeViews(savedInstanceState)
         initializeViewModel()
+
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        if (intent.action != Intent.ACTION_PROCESS_TEXT) return
+
+        val text = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)
+        binding.passwordEditText.setText(text)
     }
 
     private fun initializeViews(savedInstanceState: Bundle?) {
@@ -104,12 +114,5 @@ class MainActivity : AppCompatActivity() {
         outState.putInt(DAYS_PICKER_BUNDLE_KEY, binding.daysPicker.value)
         outState.putInt(VIEWS_PICKER_BUNDLE_KEY, binding.viewsPicker.value)
         super.onSaveInstanceState(outState)
-    }
-
-    private fun closeKeyboard() {
-        currentFocus?.let {
-            (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
-                ?.hideSoftInputFromWindow(it.windowToken, 0)
-        }
     }
 }
