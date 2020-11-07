@@ -1,4 +1,4 @@
-package com.chesire.passpusher
+package com.chesire.pushie
 
 import android.content.ClipboardManager
 import android.content.Context
@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.chesire.passpusher.api.PasswordPusher
-import com.chesire.passpusher.databinding.ActivityMainBinding
-import com.chesire.passpusher.extension.closeKeyboard
+import com.chesire.pushie.api.PasswordPusher
+import com.chesire.pushie.databinding.ActivityMainBinding
+import com.chesire.pushie.extension.closeKeyboard
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.OkHttpClient
 

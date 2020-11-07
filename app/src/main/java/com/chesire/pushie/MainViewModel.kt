@@ -1,4 +1,4 @@
-package com.chesire.passpusher
+package com.chesire.pushie
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.passpusher.api.PasswordAPI
+import com.chesire.pushie.api.PasswordAPI
 import kotlinx.coroutines.launch
 
 /**
@@ -42,7 +42,7 @@ class MainViewModel(
     }
 
     private fun copyToClipboard(value: String) =
-        clipboard.setPrimaryClip(ClipData.newPlainText("PassPusher", value))
+        clipboard.setPrimaryClip(ClipData.newPlainText("Pushie", value))
 
     /**
      * Different possible states of the api request.

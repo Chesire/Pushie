@@ -1,4 +1,4 @@
-package com.chesire.passpusher.api
+package com.chesire.pushie.api
 
 /**
  * Model containing the result data from pushing a password using [PasswordAPI.sendPassword].

@@ -1,4 +1,4 @@
-package com.chesire.passpusher.extension
+package com.chesire.pushie.extension
 
 import android.app.Activity
 import android.content.Context
