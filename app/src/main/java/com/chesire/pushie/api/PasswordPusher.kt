@@ -1,4 +1,4 @@
-package com.chesire.passpusher.api
+package com.chesire.pushie.api
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -1,4 +1,4 @@
-package com.chesire.passpusher.api
+package com.chesire.pushie.api
 
 /**
  * Provides methods for pushing passwords up to an API.
