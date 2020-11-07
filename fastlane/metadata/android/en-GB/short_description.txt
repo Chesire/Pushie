@@ -1,0 +1,1 @@
+Provides temporary, secure, password sharing
