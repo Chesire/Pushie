@@ -28,7 +28,7 @@ subprojects {
 
 detekt {
     config = files("detekt.yml")
-    input = files("app/src/main/java",)
+    input = files("app/src/main/java")
     reports {
         xml {
             enabled = true
