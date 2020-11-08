@@ -1,0 +1,2 @@
+json_key_file("fastlane/services.json")
+package_name("com.chesire.pushie")
