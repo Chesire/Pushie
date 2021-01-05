@@ -86,7 +86,7 @@ jobs:
       with:
         name: detekt
         path: build/reports/
-    - uses: MeilCli/danger-action@v5.0.2
+    - uses: MeilCli/danger-action@v5.0.3
       with:
         plugins_file: 'Gemfile'
         install_path: 'vendor/bundle'
