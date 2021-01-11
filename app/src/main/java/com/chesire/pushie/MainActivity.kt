@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.pushie.api.PasswordPusher
@@ -80,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     private fun initializeViewModel() {
         viewModel.apiState.observe(
             this,
-            Observer { state ->
+            { state ->
                 when (state) {
                     MainViewModel.ApiState.InProgress -> setLoadingIndicatorState(true)
                     MainViewModel.ApiState.Success -> {

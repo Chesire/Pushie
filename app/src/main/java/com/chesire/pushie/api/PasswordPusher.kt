@@ -10,7 +10,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 import java.net.HttpURLConnection
-import java.security.InvalidParameterException
 
 private const val PWPUSH_BASE = "https://pwpush.com/p"
 private const val PWPUSH_ENDPOINT = "$PWPUSH_BASE.json"
@@ -27,7 +26,7 @@ class PasswordPusher(private val client: OkHttpClient) : PasswordAPI {
         expiryDays: Int,
         expiryViews: Int
     ): PasswordAPI.SendPasswordResult {
-        if (password.isBlank()) throw InvalidParameterException("Password cannot be a blank string")
+        check(password.isNotBlank()) { "Password cannot be a blank string" }
 
         val body = createRequestString(password, expiryDays, expiryViews)
         val request = createRequest(body)
