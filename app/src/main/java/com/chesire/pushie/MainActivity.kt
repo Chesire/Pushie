@@ -94,6 +94,12 @@ class MainActivity : AppCompatActivity() {
                             .make(binding.root, R.string.result_failure, Snackbar.LENGTH_LONG)
                             .show()
                     }
+                    MainViewModel.ApiState.EmptyPassword -> {
+                        setLoadingIndicatorState(false)
+                        Snackbar
+                            .make(binding.root, R.string.result_empty_password, Snackbar.LENGTH_LONG)
+                            .show()
+                    }
                 }
             }
         )
