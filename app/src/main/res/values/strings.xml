@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">Pushie</string>
+
     <string name="process_text_action_text">Pushie</string>
+
     <string name="password_hint">Enter password</string>
     <string name="days_expiry_text">Days till expiry</string>
     <string name="views_expiry_text">Views till expiry</string>
     <string name="main_send">Send</string>
+
     <string name="result_success">Result copied to clipboard</string>
     <string name="result_failure">Request failed, please try again…</string>
+    <string name="result_empty_password">Please enter a password</string>
 </resources>
