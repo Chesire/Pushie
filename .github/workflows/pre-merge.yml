@@ -39,3 +39,38 @@ jobs:
       with:
         name: detekt
         path: build/reports/
+
+  danger:
+    needs: [ analyze ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-ruby@v1.1.2
+      with:
+        ruby-version: '2.6'
+    - name: install bundler 2.1.2
+      run: gem install bundler:2.1.2
+    - uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('Gemfile') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+    - name: download lint results
+      uses: actions/download-artifact@v2
+      with:
+        name: lint
+        path: app/build/reports/
+    - name: download detekt results
+      uses: actions/download-artifact@v2
+      with:
+        name: detekt
+        path: build/reports/
+    - uses: MeilCli/danger-action@v5.0.3
+      with:
+        plugins_file: 'Gemfile'
+        install_path: 'vendor/bundle'
+        danger_file: 'Dangerfile'
+        danger_id: 'danger-ci'
+      env:
+        DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_API_TOKEN }}
