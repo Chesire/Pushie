@@ -1,0 +1,78 @@
+name: Run Danger
+
+on:
+  workflow_run:
+    workflows: ["Pre-Merge"]
+    types:
+      - completed
+
+jobs:
+  danger:
+    runs-on: ubuntu-latest
+    if: >
+      ${{ github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' }}
+    steps:
+    - uses: actions/setup-ruby@v1.1.2
+      with:
+        ruby-version: '2.6'
+    - name: install bundler 2.1.2
+      run: gem install bundler:2.1.2
+    - uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('Gemfile') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+    - name: 'download Lint results'
+      uses: actions/github-script@v3.1.0
+      with:
+        script: |
+          var artifacts = await github.actions.listWorkflowRunArtifacts({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: ${{github.event.workflow_run.id }},
+          });
+          var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+            return artifact.name == "lint"
+          })[0];
+          var download = await github.actions.downloadArtifact({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            artifact_id: matchArtifact.id,
+            archive_format: 'zip',
+          });
+          var fs = require('fs');
+          fs.writeFileSync('${{github.workspace}}/lint.zip', Buffer.from(download.data));
+    - name: unzip Lint results
+      run: unzip lint.zip
+    - name: 'download Detekt results'
+      uses: actions/github-script@v3.1.0
+      with:
+        script: |
+          var artifacts = await github.actions.listWorkflowRunArtifacts({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: ${{github.event.workflow_run.id }},
+          });
+          var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+            return artifact.name == "detekt"
+          })[0];
+          var download = await github.actions.downloadArtifact({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            artifact_id: matchArtifact.id,
+            archive_format: 'zip',
+          });
+          var fs = require('fs');
+          fs.writeFileSync('${{github.workspace}}/detekt.zip', Buffer.from(download.data));
+    - name: unzip detekt results
+      run: unzip detekt.zip
+    - uses: MeilCli/danger-action@v5.0.3
+      with:
+        plugins_file: 'Gemfile'
+        install_path: 'vendor/bundle'
+        danger_file: 'Dangerfile'
+        danger_id: 'danger-ci'
+      env:
+        DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_API_TOKEN }}
