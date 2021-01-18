@@ -24,17 +24,48 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('Gemfile') }}
         restore-keys: |
           ${{ runner.os }}-gems-
-    - name: download lint results
-      uses: actions/download-artifact@v2
+    - name: 'download Lint results'
+      uses: actions/github-script@v3.1.0
       with:
-        name: lint
-        path: app/build/reports/
-    - name: download detekt results
-      uses: actions/download-artifact@v2
+        script: |
+          var artifacts = await github.actions.listWorkflowRunArtifacts({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: ${{github.event.workflow_run.id }},
+          });
+          var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+            return artifact.name == "lint"
+          })[0];
+          var download = await github.actions.downloadArtifact({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            artifact_id: matchArtifact.id,
+            archive_format: 'zip',
+          });
+          var fs = require('fs');
+          fs.writeFileSync('${{github.workspace}}/lint.zip', Buffer.from(download.data));
+      - run: unzip lint.zip
+    - name: 'download Detekt results'
+      uses: actions/github-script@v3.1.0
       with:
-        name: detekt
-        path: build/reports/
-    - uses: MeilCli/danger-action@v5.0.3
+        script: |
+          var artifacts = await github.actions.listWorkflowRunArtifacts({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: ${{github.event.workflow_run.id }},
+          });
+          var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+            return artifact.name == "detekt"
+          })[0];
+          var download = await github.actions.downloadArtifact({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            artifact_id: matchArtifact.id,
+            archive_format: 'zip',
+          });
+          var fs = require('fs');
+          fs.writeFileSync('${{github.workspace}}/detekt.zip', Buffer.from(download.data));
+      - run: unzip detekt.zip    - uses: MeilCli/danger-action@v5.0.3
       with:
         plugins_file: 'Gemfile'
         install_path: 'vendor/bundle'
