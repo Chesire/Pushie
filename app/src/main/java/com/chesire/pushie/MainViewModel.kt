@@ -34,6 +34,7 @@ class MainViewModel(
             return
         }
 
+        val test = "" as String
         _apiState.postValue(ApiState.InProgress)
         viewModelScope.launch {
             val result = passwordPusher.sendPassword(password, expiryDays, expiryViews)
