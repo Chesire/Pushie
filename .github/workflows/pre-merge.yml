@@ -1,20 +1,13 @@
-name: Android CI
+name: Pre-Merge
 
 on:
-  push:
-    branches: [ master ]
-  pull_request_target:
-    branches: [ master ]
+  pull_request:
 
 jobs:
   assemble:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: ${{github.event.pull_request.head.ref}}
-        repository: ${{github.event.pull_request.head.repo.full_name}}
-        fetch-depth: 0
     - name: set up JDK 1.8
       uses: actions/setup-java@v1.4.3
       with:
@@ -22,20 +15,25 @@ jobs:
     - name: run assemble
       run: ./gradlew assemble
 
-  analyze:
+  ktlint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: ${{github.event.pull_request.head.ref}}
-        repository: ${{github.event.pull_request.head.repo.full_name}}
-        fetch-depth: 0
     - name: set up JDK 1.8
       uses: actions/setup-java@v1.4.3
       with:
         java-version: 1.8
     - name: run ktlintCheck
       run: ./gradlew ktlintCheck
+
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 1.8
+      uses: actions/setup-java@v1.4.3
+      with:
+        java-version: 1.8
     - name: run lintDebug
       run: ./gradlew lintDebug
     - name: upload lint results
@@ -53,18 +51,9 @@ jobs:
 
   danger:
     needs: [ analyze ]
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: ${{github.event.pull_request.head.ref}}
-        repository: ${{github.event.pull_request.head.repo.full_name}}
-        fetch-depth: 0
-    - name: set up JDK 1.8
-      uses: actions/setup-java@v1.4.3
-      with:
-        java-version: 1.8
     - uses: actions/setup-ruby@v1.1.2
       with:
         ruby-version: '2.6'
