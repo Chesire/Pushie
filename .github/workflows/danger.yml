@@ -44,7 +44,8 @@ jobs:
           });
           var fs = require('fs');
           fs.writeFileSync('${{github.workspace}}/lint.zip', Buffer.from(download.data));
-      - run: unzip lint.zip
+    - name: unzip Lint results
+      run: unzip lint.zip
     - name: 'download Detekt results'
       uses: actions/github-script@v3.1.0
       with:
@@ -65,7 +66,8 @@ jobs:
           });
           var fs = require('fs');
           fs.writeFileSync('${{github.workspace}}/detekt.zip', Buffer.from(download.data));
-      - run: unzip detekt.zip
+    - name: unzip detekt results
+      run: unzip detekt.zip
     - uses: MeilCli/danger-action@v5.0.3
       with:
         plugins_file: 'Gemfile'
