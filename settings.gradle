@@ -1,2 +1,3 @@
 rootProject.name='Pushie'
 include ':app'
+include ':feature:pusher'
