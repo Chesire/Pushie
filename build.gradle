@@ -37,19 +37,15 @@ subprojects {
     }
 }
 
-detekt {
-    config = files("detekt.yml")
-    input = files("app/src/main/java")
-    reports {
-        xml {
-            enabled = true
-            destination = file("build/reports/detekt/detekt.xml")
-        }
-        html {
-            enabled = true
-            destination = file("build/reports/detekt/detekt.html")
-        }
-    }
+task detektCheck(type: io.gitlab.arturbosch.detekt.Detekt) {
+    parallel = true
+    source = files(projectDir)
+    include "**/*.kt"
+    include "**/*.kts"
+    exclude "**/resources/**"
+    exclude "**/build/**"
+    config.setFrom(files("$rootDir/detekt.yml"))
+    buildUponDefaultConfig = false
 }
 
 task clean(type: Delete) {
