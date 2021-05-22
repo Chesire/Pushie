@@ -20,7 +20,7 @@ class PusherViewModel(
      * The current state of the api request.
      */
     val apiState: LiveData<ApiState>
-    get() = _apiState
+        get() = _apiState
 
     /**
      * Send the current details up to the api, result will be synced along the [apiState] live data.

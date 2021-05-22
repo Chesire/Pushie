@@ -90,7 +90,7 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
     }
 
     private fun initializeViewModel() {
-        viewModel.apiState.observe(viewLifecycleOwner, { state ->
+        viewModel.apiState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 PusherViewModel.ApiState.InProgress -> setLoadingIndicatorState(true)
                 PusherViewModel.ApiState.Success -> {
@@ -112,7 +112,7 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
                         .show()
                 }
             }
-        })
+        }
     }
 
     private fun setLoadingIndicatorState(visible: Boolean) {
