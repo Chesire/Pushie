@@ -1,4 +1,4 @@
-package com.chesire.pushie
+package com.chesire.pushie.pusher
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -9,10 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.chesire.pushie.datasource.pwpush.remote.PasswordAPI
 import kotlinx.coroutines.launch
 
-/**
- * Main view model to use for the application.
- */
-class MainViewModel(
+class PusherViewModel(
     private val passwordPusher: PasswordAPI,
     private val clipboard: ClipboardManager
 ) : ViewModel() {
@@ -23,7 +20,7 @@ class MainViewModel(
      * The current state of the api request.
      */
     val apiState: LiveData<ApiState>
-        get() = _apiState
+    get() = _apiState
 
     /**
      * Send the current details up to the api, result will be synced along the [apiState] live data.

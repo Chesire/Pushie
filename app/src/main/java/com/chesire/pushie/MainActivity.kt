@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.chesire.pushie.databinding.ActivityMainBinding
 import com.chesire.pushie.datasource.pwpush.remote.PasswordPusher
 import com.chesire.pushie.extension.closeKeyboard
+import com.chesire.pushie.pusher.PusherViewModel
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.OkHttpClient
 
@@ -24,7 +25,7 @@ private const val VIEWS_PICKER_BUNDLE_KEY = "VIEWS_PICKER_BUNDLE_KEY"
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: MainViewModel by viewModels {
+    private val viewModel: PusherViewModel by viewModels {
         object : ViewModelProvider.Factory {
             private val okHttpClient = OkHttpClient()
             private val passwordApi = PasswordPusher(okHttpClient)
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return MainViewModel(passwordApi, clipboard) as T
+                return PusherViewModel(passwordApi, clipboard) as T
             }
         }
     }
@@ -81,20 +82,20 @@ class MainActivity : AppCompatActivity() {
             this,
             { state ->
                 when (state) {
-                    MainViewModel.ApiState.InProgress -> setLoadingIndicatorState(true)
-                    MainViewModel.ApiState.Success -> {
+                    PusherViewModel.ApiState.InProgress -> setLoadingIndicatorState(true)
+                    PusherViewModel.ApiState.Success -> {
                         setLoadingIndicatorState(false)
                         Snackbar
                             .make(binding.root, R.string.result_success, Snackbar.LENGTH_LONG)
                             .show()
                     }
-                    MainViewModel.ApiState.Failure -> {
+                    PusherViewModel.ApiState.Failure -> {
                         setLoadingIndicatorState(false)
                         Snackbar
                             .make(binding.root, R.string.result_failure, Snackbar.LENGTH_LONG)
                             .show()
                     }
-                    MainViewModel.ApiState.EmptyPassword -> {
+                    PusherViewModel.ApiState.EmptyPassword -> {
                         setLoadingIndicatorState(false)
                         Snackbar
                             .make(binding.root, R.string.result_empty_password, Snackbar.LENGTH_LONG)
