@@ -1,4 +1,4 @@
-package com.chesire.pushie
+package com.chesire.pushie.pusher
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -6,13 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.pushie.api.PasswordAPI
+import com.chesire.pushie.datasource.pwpush.remote.PasswordAPI
 import kotlinx.coroutines.launch
 
-/**
- * Main view model to use for the application.
- */
-class MainViewModel(
+class PusherViewModel(
     private val passwordPusher: PasswordAPI,
     private val clipboard: ClipboardManager
 ) : ViewModel() {

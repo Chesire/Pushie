@@ -1,4 +1,4 @@
-package com.chesire.pushie.extension
+package com.chesire.pushie.common
 
 import android.app.Activity
 import android.content.Context

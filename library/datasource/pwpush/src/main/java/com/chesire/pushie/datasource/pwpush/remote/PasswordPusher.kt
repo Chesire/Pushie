@@ -1,4 +1,4 @@
-package com.chesire.pushie.api
+package com.chesire.pushie.datasource.pwpush.remote
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

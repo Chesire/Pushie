@@ -1,4 +1,4 @@
-package com.chesire.pushie.api
+package com.chesire.pushie.datasource.pwpush.remote
 
 /**
  * Model containing the result data from pushing a password using [PasswordAPI.sendPassword].
