@@ -9,9 +9,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.chesire.pushie.common.closeKeyboard
 import com.chesire.pushie.databinding.ActivityMainBinding
 import com.chesire.pushie.datasource.pwpush.remote.PasswordPusher
-import com.chesire.pushie.extension.closeKeyboard
 import com.chesire.pushie.pusher.PusherViewModel
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.OkHttpClient

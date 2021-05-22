@@ -35,6 +35,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation project(":feature:pusher")
+    implementation project(":library:common")
     implementation project(":library:datasource:pwpush")
     implementation project(":library:resources")
 
