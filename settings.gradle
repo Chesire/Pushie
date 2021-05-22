@@ -1,6 +1,0 @@
-rootProject.name='Pushie'
-include ':app'
-include ':feature:pusher'
-include ':library:datasource:pwpush'
-include ':library:resources'
-include ':library:common'
