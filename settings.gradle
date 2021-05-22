@@ -1,3 +1,4 @@
 rootProject.name='Pushie'
 include ':app'
 include ':feature:pusher'
+include ':library:datasource:pwpush'
