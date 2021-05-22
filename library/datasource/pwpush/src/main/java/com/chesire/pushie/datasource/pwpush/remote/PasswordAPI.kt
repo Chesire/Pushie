@@ -1,4 +1,4 @@
-package com.chesire.pushie.api
+package com.chesire.pushie.datasource.pwpush.remote
 
 /**
  * Provides methods for pushing passwords up to an API.
