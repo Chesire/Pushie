@@ -83,10 +83,12 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
         }
         binding.passwordEditText.setText(arguments?.getCharSequence(PW_KEY))
         binding.sendButton.setOnClickListener {
-            viewModel.sendApiRequest(
-                binding.passwordEditText.text.toString(),
-                binding.daysPicker.value,
-                binding.viewsPicker.value
+            viewModel.execute(
+                Action.SubmitPassword(
+                    binding.passwordEditText.text.toString(),
+                    binding.daysPicker.value,
+                    binding.viewsPicker.value
+                )
             )
 
             activity?.closeKeyboard()

@@ -11,7 +11,7 @@ class PusherViewModel(
     private val clipboardInteractor: ClipboardInteractor
 ) : ViewModel() {
 
-    private val _apiState = MutableLiveData<ApiState>()
+    private val _apiState = MutableLiveData<ApiState>() // need to use a live event really?
 
     /**
      * The current state of the api request.
@@ -20,9 +20,19 @@ class PusherViewModel(
         get() = _apiState
 
     /**
-     * Send the current details up to the api, result will be synced along the [apiState] live data.
+     * Execute an [action] on the ViewModel.
      */
-    fun sendApiRequest(password: String, expiryDays: Int, expiryViews: Int) {
+    fun execute(action: Action) {
+        when (action) {
+            is Action.SubmitPassword -> sendApiRequest(
+                action.password,
+                action.expiryDays,
+                action.expiryViews
+            )
+        }
+    }
+
+    private fun sendApiRequest(password: String, expiryDays: Int, expiryViews: Int) {
         if (password.isBlank()) {
             _apiState.postValue(ApiState.EmptyPassword)
             return
@@ -49,4 +59,12 @@ class PusherViewModel(
         Failure,
         EmptyPassword
     }
+}
+
+sealed class Action {
+    data class SubmitPassword(
+        val password: String,
+        val expiryDays: Int,
+        val expiryViews: Int
+    ) : Action()
 }
