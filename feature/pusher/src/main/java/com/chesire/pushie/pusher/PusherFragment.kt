@@ -12,7 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.pushie.common.closeKeyboard
-import com.chesire.pushie.datasource.pwpush.remote.PasswordPusher
+import com.chesire.pushie.datasource.pwpush.PWPushRepository
+import com.chesire.pushie.datasource.pwpush.remote.PusherApi
 import com.chesire.pushie.pusher.databinding.FragmentPusherBinding
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.OkHttpClient
@@ -29,7 +30,8 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
     private val viewModel: PusherViewModel by viewModels {
         object : ViewModelProvider.Factory {
             private val okHttpClient = OkHttpClient()
-            private val passwordApi = PasswordPusher(okHttpClient)
+            private val pusherApi = PusherApi(okHttpClient)
+            private val pusherRepository = PWPushRepository(pusherApi)
             private val clipboard = getSystemService(
                 requireContext(),
                 ClipboardManager::class.java
@@ -37,7 +39,7 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
 
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return PusherViewModel(passwordApi, clipboard) as T
+                return PusherViewModel(PusherInteractor(pusherRepository), clipboard) as T
             }
         }
     }

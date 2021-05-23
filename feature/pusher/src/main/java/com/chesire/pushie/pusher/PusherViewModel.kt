@@ -6,11 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.pushie.datasource.pwpush.remote.PasswordAPI
 import kotlinx.coroutines.launch
 
 class PusherViewModel(
-    private val passwordPusher: PasswordAPI,
+    private val pushInteractor: PusherInteractor,
     private val clipboard: ClipboardManager
 ) : ViewModel() {
 
@@ -33,12 +32,13 @@ class PusherViewModel(
 
         _apiState.postValue(ApiState.InProgress)
         viewModelScope.launch {
-            val result = passwordPusher.sendPassword(password, expiryDays, expiryViews)
-            result.model?.let { model ->
-                val url = passwordPusher.createPasswordUrl(model.urlToken)
-                copyToClipboard(url)
-                _apiState.postValue(ApiState.Success)
-            } ?: _apiState.postValue(ApiState.Failure)
+            when (val result = pushInteractor.sendNewPassword(password, expiryDays, expiryViews)) {
+                is SendPasswordResult.Success -> {
+                    copyToClipboard(result.url)
+                    _apiState.postValue(ApiState.Success)
+                }
+                SendPasswordResult.Error -> _apiState.postValue(ApiState.Failure)
+            }
         }
     }
 
