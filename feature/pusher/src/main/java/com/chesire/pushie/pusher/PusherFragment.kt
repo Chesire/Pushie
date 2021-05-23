@@ -32,14 +32,16 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
             private val okHttpClient = OkHttpClient()
             private val pusherApi = PusherApi(okHttpClient)
             private val pusherRepository = PWPushRepository(pusherApi)
+            private val pusherInteractor = PusherInteractor(pusherRepository)
             private val clipboard = getSystemService(
                 requireContext(),
                 ClipboardManager::class.java
             ) as ClipboardManager
+            private val clipboardInteractor = ClipboardInteractor(clipboard)
 
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return PusherViewModel(PusherInteractor(pusherRepository), clipboard) as T
+                return PusherViewModel(pusherInteractor, clipboardInteractor) as T
             }
         }
     }

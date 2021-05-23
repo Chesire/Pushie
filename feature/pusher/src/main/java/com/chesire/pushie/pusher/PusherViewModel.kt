@@ -1,7 +1,5 @@
 package com.chesire.pushie.pusher
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +8,7 @@ import kotlinx.coroutines.launch
 
 class PusherViewModel(
     private val pushInteractor: PusherInteractor,
-    private val clipboard: ClipboardManager
+    private val clipboardInteractor: ClipboardInteractor
 ) : ViewModel() {
 
     private val _apiState = MutableLiveData<ApiState>()
@@ -34,16 +32,13 @@ class PusherViewModel(
         viewModelScope.launch {
             when (val result = pushInteractor.sendNewPassword(password, expiryDays, expiryViews)) {
                 is SendPasswordResult.Success -> {
-                    copyToClipboard(result.url)
+                    clipboardInteractor.copyToClipboard(result.url)
                     _apiState.postValue(ApiState.Success)
                 }
                 SendPasswordResult.Error -> _apiState.postValue(ApiState.Failure)
             }
         }
     }
-
-    private fun copyToClipboard(value: String) =
-        clipboard.setPrimaryClip(ClipData.newPlainText("Pushie", value))
 
     /**
      * Different possible states of the api request.
