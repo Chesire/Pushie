@@ -9,13 +9,13 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:4.2.1")
-        classpath(kotlin("gradle-plugin", version = "1.5.0"))
+        classpath(kotlin("gradle-plugin", "1.5.0"))
     }
 }
 
 plugins {
-    id("io.gitlab.arturbosch.detekt") version ("1.9.1")
-    id("org.jlleitschuh.gradle.ktlint") version ("10.0.0")
+    id("io.gitlab.arturbosch.detekt") version "1.9.1"
+    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
 }
 
 allprojects {
@@ -29,9 +29,7 @@ subprojects {
     apply<KtlintPlugin>()
 
     afterEvaluate {
-        if (plugins.hasPlugin("android") ||
-            plugins.hasPlugin("android-library")
-        ) {
+        if (plugins.hasPlugin("android") || plugins.hasPlugin("android-library")) {
             if (extensions.findByName("LintOptions") == true) {
                 extensions.getByType<LintOptions>().apply {
                     isAbortOnError = false
