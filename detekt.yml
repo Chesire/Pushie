@@ -8,7 +8,7 @@ console-reports:
   active: true
 
 comments:
-  active: true
+  active: false
   excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
   AbsentOrWrongFileLicense:
     active: false

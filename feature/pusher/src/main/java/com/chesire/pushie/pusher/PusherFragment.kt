@@ -12,7 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.pushie.common.closeKeyboard
-import com.chesire.pushie.datasource.pwpush.remote.PasswordPusher
+import com.chesire.pushie.datasource.pwpush.PWPushRepository
+import com.chesire.pushie.datasource.pwpush.remote.PusherApi
 import com.chesire.pushie.pusher.databinding.FragmentPusherBinding
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.OkHttpClient
@@ -20,6 +21,9 @@ import okhttp3.OkHttpClient
 private const val DAYS_PICKER_BUNDLE_KEY = "DAYS_PICKER_BUNDLE_KEY"
 private const val VIEWS_PICKER_BUNDLE_KEY = "VIEWS_PICKER_BUNDLE_KEY"
 
+/**
+ * Fragment for the main screen of the application, that allows users to use the api service.
+ */
 class PusherFragment : Fragment(R.layout.fragment_pusher) {
 
     private var _binding: FragmentPusherBinding? = null
@@ -29,15 +33,18 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
     private val viewModel: PusherViewModel by viewModels {
         object : ViewModelProvider.Factory {
             private val okHttpClient = OkHttpClient()
-            private val passwordApi = PasswordPusher(okHttpClient)
+            private val pusherApi = PusherApi(okHttpClient)
+            private val pusherRepository = PWPushRepository(pusherApi)
+            private val pusherInteractor = PusherInteractor(pusherRepository)
             private val clipboard = getSystemService(
                 requireContext(),
                 ClipboardManager::class.java
             ) as ClipboardManager
+            private val clipboardInteractor = ClipboardInteractor(clipboard)
 
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return PusherViewModel(passwordApi, clipboard) as T
+                return PusherViewModel(pusherInteractor, clipboardInteractor) as T
             }
         }
     }
@@ -79,10 +86,12 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
         }
         binding.passwordEditText.setText(arguments?.getCharSequence(PW_KEY))
         binding.sendButton.setOnClickListener {
-            viewModel.sendApiRequest(
-                binding.passwordEditText.text.toString(),
-                binding.daysPicker.value,
-                binding.viewsPicker.value
+            viewModel.execute(
+                Action.SubmitPassword(
+                    binding.passwordEditText.text.toString(),
+                    binding.daysPicker.value,
+                    binding.viewsPicker.value
+                )
             )
 
             activity?.closeKeyboard()
@@ -128,6 +137,10 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
     companion object {
         private const val PW_KEY = "PW_KEY"
 
+        /**
+         * Creates a new instance of the fragment.
+         * Pass [password] to have it pre-populated in the password edit text.
+         */
         fun newInstance(password: CharSequence?): PusherFragment {
             return PusherFragment().apply {
                 arguments = bundleOf(PW_KEY to password)

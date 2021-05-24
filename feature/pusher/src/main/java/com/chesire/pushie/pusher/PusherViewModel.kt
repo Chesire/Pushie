@@ -1,17 +1,17 @@
 package com.chesire.pushie.pusher
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chesire.pushie.datasource.pwpush.remote.PasswordAPI
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel to use with the [PusherFragment].
+ */
 class PusherViewModel(
-    private val passwordPusher: PasswordAPI,
-    private val clipboard: ClipboardManager
+    private val pushInteractor: PusherInteractor,
+    private val clipboardInteractor: ClipboardInteractor
 ) : ViewModel() {
 
     private val _apiState = MutableLiveData<ApiState>()
@@ -23,9 +23,19 @@ class PusherViewModel(
         get() = _apiState
 
     /**
-     * Send the current details up to the api, result will be synced along the [apiState] live data.
+     * Execute an [action] on the ViewModel.
      */
-    fun sendApiRequest(password: String, expiryDays: Int, expiryViews: Int) {
+    fun execute(action: Action) {
+        when (action) {
+            is Action.SubmitPassword -> sendApiRequest(
+                action.password,
+                action.expiryDays,
+                action.expiryViews
+            )
+        }
+    }
+
+    private fun sendApiRequest(password: String, expiryDays: Int, expiryViews: Int) {
         if (password.isBlank()) {
             _apiState.postValue(ApiState.EmptyPassword)
             return
@@ -33,17 +43,15 @@ class PusherViewModel(
 
         _apiState.postValue(ApiState.InProgress)
         viewModelScope.launch {
-            val result = passwordPusher.sendPassword(password, expiryDays, expiryViews)
-            result.model?.let { model ->
-                val url = passwordPusher.createPasswordUrl(model.urlToken)
-                copyToClipboard(url)
-                _apiState.postValue(ApiState.Success)
-            } ?: _apiState.postValue(ApiState.Failure)
+            when (val result = pushInteractor.sendNewPassword(password, expiryDays, expiryViews)) {
+                is SendPasswordResult.Success -> {
+                    clipboardInteractor.copyToClipboard(result.url)
+                    _apiState.postValue(ApiState.Success)
+                }
+                SendPasswordResult.Error -> _apiState.postValue(ApiState.Failure)
+            }
         }
     }
-
-    private fun copyToClipboard(value: String) =
-        clipboard.setPrimaryClip(ClipData.newPlainText("Pushie", value))
 
     /**
      * Different possible states of the api request.
@@ -54,4 +62,15 @@ class PusherViewModel(
         Failure,
         EmptyPassword
     }
+}
+
+/**
+ * Different actions that can be used on this view model.
+ */
+sealed class Action {
+    data class SubmitPassword(
+        val password: String,
+        val expiryDays: Int,
+        val expiryViews: Int
+    ) : Action()
 }
