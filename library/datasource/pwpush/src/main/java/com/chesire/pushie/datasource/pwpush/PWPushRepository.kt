@@ -22,4 +22,3 @@ class PWPushRepository(private val passwordAPI: PusherApi) {
         return result
     }
 }
-

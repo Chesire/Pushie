@@ -1,6 +1,5 @@
 package com.chesire.pushie.datasource.pwpush.remote
 
-import java.io.IOException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -9,6 +8,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.IOException
 
 private const val PWPUSH_BASE = "https://pwpush.com/p"
 private const val PWPUSH_ENDPOINT = "$PWPUSH_BASE.json"
