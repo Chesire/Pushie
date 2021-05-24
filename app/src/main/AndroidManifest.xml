@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.chesire.pushie.MainActivity"
-            android:label="@string/process_text_action_text">
+            android:label="@string/process_text_action_text"
+            android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

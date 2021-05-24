@@ -8,4 +8,10 @@
         <item name="android:navigationBarColor">@color/colorBackground</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
+
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:navigationBarColor">@color/colorBackground</item>
+    </style>
+
 </resources>
