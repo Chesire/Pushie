@@ -14,7 +14,7 @@ class PusherViewModel(
     private val clipboardInteractor: ClipboardInteractor
 ) : ViewModel() {
 
-    private val _apiState = MutableLiveData<ApiState>() // need to use a live event really?
+    private val _apiState = MutableLiveData<ApiState>()
 
     /**
      * The current state of the api request.
