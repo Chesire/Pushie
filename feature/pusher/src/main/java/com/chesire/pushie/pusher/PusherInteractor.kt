@@ -3,8 +3,14 @@ package com.chesire.pushie.pusher
 import com.chesire.pushie.datasource.pwpush.PWPushRepository
 import com.chesire.pushie.datasource.pwpush.remote.ApiResult
 
+/**
+ * Interacts with the [PWPushRepository] to send up passwords and generate urls.
+ */
 class PusherInteractor(private val repository: PWPushRepository) {
 
+    /**
+     * Sends a new password to the API, and returns a [SendPasswordResult].
+     */
     suspend fun sendNewPassword(
         password: String,
         expiryDays: Int,
@@ -18,6 +24,9 @@ class PusherInteractor(private val repository: PWPushRepository) {
     }
 }
 
+/**
+ * Result object for using [PusherInteractor.sendNewPassword].
+ */
 sealed class SendPasswordResult {
     data class Success(val url: String) : SendPasswordResult()
     object Error : SendPasswordResult()

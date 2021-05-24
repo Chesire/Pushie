@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel to use with the [PusherFragment].
+ */
 class PusherViewModel(
     private val pushInteractor: PusherInteractor,
     private val clipboardInteractor: ClipboardInteractor
@@ -61,6 +64,9 @@ class PusherViewModel(
     }
 }
 
+/**
+ * Different actions that can be used on this view model.
+ */
 sealed class Action {
     data class SubmitPassword(
         val password: String,

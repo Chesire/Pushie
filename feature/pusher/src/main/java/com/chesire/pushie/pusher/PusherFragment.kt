@@ -21,6 +21,9 @@ import okhttp3.OkHttpClient
 private const val DAYS_PICKER_BUNDLE_KEY = "DAYS_PICKER_BUNDLE_KEY"
 private const val VIEWS_PICKER_BUNDLE_KEY = "VIEWS_PICKER_BUNDLE_KEY"
 
+/**
+ * Fragment for the main screen of the application, that allows users to use the api service.
+ */
 class PusherFragment : Fragment(R.layout.fragment_pusher) {
 
     private var _binding: FragmentPusherBinding? = null
@@ -134,6 +137,10 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
     companion object {
         private const val PW_KEY = "PW_KEY"
 
+        /**
+         * Creates a new instance of the fragment.
+         * Pass [password] to have it pre-populated in the password edit text.
+         */
         fun newInstance(password: CharSequence?): PusherFragment {
             return PusherFragment().apply {
                 arguments = bundleOf(PW_KEY to password)

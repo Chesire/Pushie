@@ -18,6 +18,9 @@ private const val PWPUSH_ENDPOINT = "$PWPUSH_BASE.json"
  */
 class PusherApi(private val client: OkHttpClient) {
 
+    /**
+     * Sends the password to the API, returning an [ApiResult] as a response.
+     */
     suspend fun sendPassword(
         password: String,
         expiryDays: Int,
