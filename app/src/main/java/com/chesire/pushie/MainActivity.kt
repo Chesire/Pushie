@@ -3,6 +3,8 @@ package com.chesire.pushie
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.chesire.pushie.pusher.PusherFragment
 import com.chesire.pushie.settings.SettingsFragment
 import com.google.android.material.appbar.MaterialToolbar
@@ -18,8 +20,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
+            handleNavigateEvents()
             navigateToPusher()
         }
+    }
+
+    private fun handleNavigateEvents() {
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
+                    when (f) {
+                        is PusherFragment -> setupPusherMenu()
+                        is SettingsFragment -> setupSettingsMenu()
+                    }
+                    super.onFragmentStarted(fm, f)
+                }
+            },
+            true
+        )
     }
 
     private fun navigateToPusher() {
@@ -29,10 +47,12 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.fragmentContainer, pusherFragment)
             .commit()
+    }
 
+    private fun setupPusherMenu() {
         findViewById<MaterialToolbar>(R.id.activityToolbar).apply {
+            menu.clear()
             inflateMenu(R.menu.menu_pusher)
-            // TODO Menu doesn't come back
             setOnMenuItemClickListener { menuItem ->
                 if (menuItem.itemId == R.id.menuSettings) {
                     navigateToSettings()
@@ -50,9 +70,10 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, SettingsFragment())
             .addToBackStack("PusherFragment")
             .commit()
-        findViewById<MaterialToolbar>(R.id.activityToolbar).apply {
-            menu.clear()
-        }
+    }
+
+    private fun setupSettingsMenu() {
+        findViewById<MaterialToolbar>(R.id.activityToolbar).menu.clear()
     }
 
     private fun parseIntent(intent: Intent): CharSequence? {
