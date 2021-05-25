@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference
+    <com.chesire.pushie.settings.controls.NotEmptyEditTextPreference
         android:defaultValue="@string/default_default_url"
         android:key="@string/key_default_url"
         android:summary="@string/settings_default_url_summary"
