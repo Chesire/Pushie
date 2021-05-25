@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="this is the default value"
+        android:key="key"
+        android:summary="Summary"
+        android:title="Title" />
+</PreferenceScreen>

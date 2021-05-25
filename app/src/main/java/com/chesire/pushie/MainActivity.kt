@@ -2,9 +2,9 @@ package com.chesire.pushie
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.chesire.pushie.pusher.PusherFragment
+import com.chesire.pushie.settings.SettingsFragment
 import com.google.android.material.appbar.MaterialToolbar
 
 /**
@@ -24,22 +24,34 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToPusher() {
         val intentPassword = parseIntent(intent)
-        val startFragment = PusherFragment.newInstance(intentPassword)
+        val pusherFragment = PusherFragment.newInstance(intentPassword)
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragmentContainer, startFragment)
+            .replace(R.id.fragmentContainer, pusherFragment)
             .commit()
 
         findViewById<MaterialToolbar>(R.id.activityToolbar).apply {
             inflateMenu(R.menu.menu_pusher)
+            // TODO Menu doesn't come back
             setOnMenuItemClickListener { menuItem ->
                 if (menuItem.itemId == R.id.menuSettings) {
-                    Log.e("Pushie", "Test")
+                    navigateToSettings()
                     true
                 } else {
                     false
                 }
             }
+        }
+    }
+
+    private fun navigateToSettings() {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, SettingsFragment())
+            .addToBackStack("PusherFragment")
+            .commit()
+        findViewById<MaterialToolbar>(R.id.activityToolbar).apply {
+            menu.clear()
         }
     }
 

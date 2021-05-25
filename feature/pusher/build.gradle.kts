@@ -25,7 +25,6 @@ android {
 }
 
 dependencies {
-
     implementation(project(":library:common"))
     implementation(project(":library:datasource:pwpush"))
     implementation(project(":library:resources"))
