@@ -58,6 +58,7 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initializeMenu()
         initializeViews(savedInstanceState)
         initializeViewModel()
     }
@@ -71,6 +72,17 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
+    }
+
+    private fun initializeMenu() {
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+            if (menuItem.itemId == R.id.menuSettings) {
+                Snackbar.make(binding.root, "Test", Snackbar.LENGTH_LONG).show()
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private fun initializeViews(savedInstanceState: Bundle?) {
