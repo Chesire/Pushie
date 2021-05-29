@@ -11,4 +11,8 @@
     <string name="result_success">Result copied to clipboard</string>
     <string name="result_failure">Request failed, please try again…</string>
     <string name="result_empty_password">Please enter a password</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_default_url_title">Pushie URL</string>
+    <string name="settings_default_url_summary">Advanced: Set the url to use for the API</string>
 </resources>

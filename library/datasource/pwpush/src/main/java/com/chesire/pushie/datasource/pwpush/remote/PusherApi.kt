@@ -1,5 +1,6 @@
 package com.chesire.pushie.datasource.pwpush.remote
 
+import com.chesire.pushie.datastore.PreferenceStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -10,13 +11,13 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 
-private const val PWPUSH_BASE = "https://pwpush.com/p"
-private const val PWPUSH_ENDPOINT = "$PWPUSH_BASE.json"
-
 /**
  * Interacts with the `pwpush.com` API.
  */
-class PusherApi(private val client: OkHttpClient) {
+class PusherApi(
+    private val client: OkHttpClient,
+    private val preferenceStore: PreferenceStore
+) {
 
     /**
      * Sends the password to the API, returning an [ApiResult] as a response.
@@ -62,7 +63,7 @@ class PusherApi(private val client: OkHttpClient) {
 
     private fun createRequest(body: String) =
         Request.Builder()
-            .url(PWPUSH_ENDPOINT)
+            .url("${preferenceStore.pushieUrl}.json")
             .addHeader("Content-Type", "application/json")
             .post(body.toRequestBody())
             .build()
@@ -95,7 +96,7 @@ class PusherApi(private val client: OkHttpClient) {
         }
     }
 
-    private fun createPasswordUrl(token: String) = "$PWPUSH_BASE/$token"
+    private fun createPasswordUrl(token: String) = "${preferenceStore.pushieUrl}/$token"
 }
 
 sealed class ApiResult {
