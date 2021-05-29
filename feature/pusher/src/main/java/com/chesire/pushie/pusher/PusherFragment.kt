@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.chesire.pushie.common.closeKeyboard
 import com.chesire.pushie.datasource.pwpush.PWPushRepository
 import com.chesire.pushie.datasource.pwpush.remote.PusherApi
+import com.chesire.pushie.datastore.PreferenceStore
 import com.chesire.pushie.pusher.databinding.FragmentPusherBinding
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.OkHttpClient
@@ -33,7 +34,8 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
     private val viewModel: PusherViewModel by viewModels {
         object : ViewModelProvider.Factory {
             private val okHttpClient = OkHttpClient()
-            private val pusherApi = PusherApi(okHttpClient)
+            private val preferenceStore = PreferenceStore(requireContext().applicationContext)
+            private val pusherApi = PusherApi(okHttpClient, preferenceStore)
             private val pusherRepository = PWPushRepository(pusherApi)
             private val pusherInteractor = PusherInteractor(pusherRepository)
             private val clipboard = getSystemService(

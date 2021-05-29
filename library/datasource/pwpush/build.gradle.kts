@@ -21,6 +21,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":library:datastore"))
+
     implementation("androidx.appcompat:appcompat:1.3.0")
     implementation("androidx.core:core-ktx:1.5.0")
     implementation("com.chesire.lintrules:lint-gradle:1.2.6")

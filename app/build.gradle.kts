@@ -41,6 +41,7 @@ dependencies {
     implementation(project(":feature:settings"))
     implementation(project(":library:common"))
     implementation(project(":library:datasource:pwpush"))
+    implementation(project(":library:datastore"))
     implementation(project(":library:resources"))
 
     implementation("androidx.appcompat:appcompat:1.3.0")
