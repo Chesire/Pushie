@@ -37,6 +37,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation("com.chesire.lintrules:lint-gradle:1.2.6")
     implementation("com.chesire.lintrules:lint-xml:1.2.6")
+    implementation("com.github.hadilq:live-event:1.2.3")
     implementation("com.google.android.material:material:1.3.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
 

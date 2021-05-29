@@ -1,9 +1,9 @@
 package com.chesire.pushie.pusher
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 
 /**
@@ -14,7 +14,7 @@ class PusherViewModel(
     private val clipboardInteractor: ClipboardInteractor
 ) : ViewModel() {
 
-    private val _apiState = MutableLiveData<ApiState>()
+    private val _apiState = LiveEvent<ApiState>()
 
     /**
      * The current state of the api request.
