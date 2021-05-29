@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<MaterialToolbar>(R.id.activityToolbar).apply {
             menu.clear()
             inflateMenu(R.menu.menu_pusher)
+            title = getString(R.string.app_name)
             setOnMenuItemClickListener { menuItem ->
                 if (menuItem.itemId == R.id.menuSettings) {
                     navigateToSettings()
@@ -73,7 +74,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupSettingsMenu() {
-        findViewById<MaterialToolbar>(R.id.activityToolbar).menu.clear()
+        findViewById<MaterialToolbar>(R.id.activityToolbar).apply {
+            menu.clear()
+            title = getString(R.string.settings_title)
+        }
     }
 
     private fun parseIntent(intent: Intent): CharSequence? {
