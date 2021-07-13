@@ -29,7 +29,7 @@ dependencies {
     implementation("com.chesire.lintrules:lint-xml:1.2.6")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1-native-mt")
 
     testImplementation("junit:junit:4.13.2")
 }
