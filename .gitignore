@@ -48,6 +48,7 @@ captures/
 .idea/dictionaries
 .idea/libraries
 .idea/sonarlint/
+.idea/deploymentTargetDropDown.xml
 # Android Studio 3 in .gitignore file.
 .idea/caches
 .idea/modules.xml
