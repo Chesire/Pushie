@@ -1,0 +1,1 @@
+Securely store a password that can be shared out with a simple web link. Password will be removed after a set number of visits, or after a time limit.
