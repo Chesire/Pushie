@@ -5,6 +5,9 @@
 Android application to interface with the
 [PasswordPusher API](https://github.com/pglombardo/PasswordPusher/wiki/Password-API)
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+      alt="Download from F-Droid"
+      height="80">](https://f-droid.org/packages/com.chesire.pushie/)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
       alt="Download from Google Play"
       height="80">
