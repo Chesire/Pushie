@@ -9,8 +9,8 @@ android {
         minSdk = 21
         targetSdk = 31
         applicationId = "com.chesire.pushie"
-        versionCode = 9
-        versionName = "2.0.1"
+        versionCode = 10
+        versionName = "2.0.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         resourceConfigurations.add("en")
     }
