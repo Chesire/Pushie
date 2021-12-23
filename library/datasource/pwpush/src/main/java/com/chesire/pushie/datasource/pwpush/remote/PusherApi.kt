@@ -89,7 +89,6 @@ class PusherApi(
     private fun createPushedModel(jsonBody: String): PushedModel {
         return with(JSONObject(jsonBody)) {
             PushedModel(
-                getInt("id"),
                 getString("created_at"),
                 createPasswordUrl(getString("url_token"))
             )
