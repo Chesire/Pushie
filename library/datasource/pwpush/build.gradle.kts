@@ -21,7 +21,7 @@ dependencies {
     implementation("com.chesire.lintrules:lint-gradle:1.2.6")
     implementation("com.chesire.lintrules:lint-xml:1.2.6")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 
     testImplementation("junit:junit:4.13.2")
