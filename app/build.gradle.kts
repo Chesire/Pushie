@@ -41,5 +41,5 @@ dependencies {
     implementation("androidx.preference:preference-ktx:1.1.1")
     implementation("com.chesire.lintrules:lint-gradle:1.2.6")
     implementation("com.chesire.lintrules:lint-xml:1.2.6")
-    implementation("com.google.android.material:material:1.4.0")
+    implementation("com.google.android.material:material:1.5.0")
 }
