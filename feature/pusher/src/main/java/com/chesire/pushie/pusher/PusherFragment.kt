@@ -44,7 +44,7 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
             ) as ClipboardManager
             private val clipboardInteractor = ClipboardInteractor(clipboard)
 
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
                 return PusherViewModel(pusherInteractor, clipboardInteractor) as T
             }
