@@ -1,6 +1,11 @@
 package com.chesire.pushie.datasource.pwpush.remote
 
+import com.chesire.pushie.common.ApiError
 import com.chesire.pushie.datastore.PreferenceStore
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import java.io.IOException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -9,7 +14,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.IOException
 
 /**
  * Interacts with the `pwpush.com` API.
@@ -20,13 +24,13 @@ class PusherApi(
 ) {
 
     /**
-     * Sends the password to the API, returning an [ApiResult] as a response.
+     * Sends the password to the API.
      */
     suspend fun sendPassword(
         password: String,
         expiryDays: Int,
         expiryViews: Int
-    ): ApiResult {
+    ): Result<PushedModel, ApiError> {
         check(password.isNotBlank()) { "Password cannot be a blank string" }
 
         val body = createRequestString(password, expiryDays, expiryViews)
@@ -39,7 +43,7 @@ class PusherApi(
                     .use { parseResponse(it) }
             }
         } catch (ex: IOException) {
-            ApiResult.ExceptionalError(ex)
+            Err(ApiError(throwable = ex))
         }
     }
 
@@ -68,20 +72,20 @@ class PusherApi(
             .post(body.toRequestBody())
             .build()
 
-    private fun parseResponse(response: Response): ApiResult {
+    private fun parseResponse(response: Response): Result<PushedModel, ApiError> {
         return if (response.isSuccessful) {
             val bodyString = response.body?.string()
             if (bodyString == null) {
-                ApiResult.Error(response.code)
+                Err(ApiError(code = response.code))
             } else {
                 try {
-                    ApiResult.Success(createPushedModel(bodyString))
+                    Ok(createPushedModel(bodyString))
                 } catch (ex: JSONException) {
-                    ApiResult.ExceptionalError(ex)
+                    Err(ApiError(throwable = ex))
                 }
             }
         } else {
-            ApiResult.Error(response.code)
+            Err(ApiError(code = response.code))
         }
     }
 
@@ -96,10 +100,4 @@ class PusherApi(
     }
 
     private fun createPasswordUrl(token: String) = "${preferenceStore.pushieUrl}/$token"
-}
-
-sealed class ApiResult {
-    data class Success(val model: PushedModel) : ApiResult()
-    data class Error(val code: Int) : ApiResult()
-    data class ExceptionalError(val throwable: Throwable?) : ApiResult()
 }

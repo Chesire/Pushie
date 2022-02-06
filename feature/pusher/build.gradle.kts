@@ -32,6 +32,7 @@ dependencies {
     implementation("com.chesire.lintrules:lint-xml:1.2.6")
     implementation("com.github.hadilq:live-event:1.3.0")
     implementation("com.google.android.material:material:1.5.0")
+    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
 
     testImplementation("junit:junit:4.13.2")

@@ -1,7 +1,8 @@
 package com.chesire.pushie.pusher
 
 import com.chesire.pushie.datasource.pwpush.PWPushRepository
-import com.chesire.pushie.datasource.pwpush.remote.ApiResult
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.mapEither
 
 /**
  * Interacts with the [PWPushRepository] to send up passwords and generate urls.
@@ -15,12 +16,12 @@ class PusherInteractor(private val repository: PWPushRepository) {
         password: String,
         expiryDays: Int,
         expiryViews: Int
-    ): SendPasswordResult {
-        return when (val sendResult = repository.sendPassword(password, expiryDays, expiryViews)) {
-            is ApiResult.Success -> SendPasswordResult.Success(sendResult.model.url)
-            is ApiResult.Error -> SendPasswordResult.Error
-            is ApiResult.ExceptionalError -> SendPasswordResult.Error
-        }
+    ): Result<SendPasswordResult.Success, SendPasswordResult.Error> {
+        return repository.sendPassword(password, expiryDays, expiryViews)
+            .mapEither(
+                success = { SendPasswordResult.Success(it.url) },
+                failure = { SendPasswordResult.Error }
+            )
     }
 }
 
