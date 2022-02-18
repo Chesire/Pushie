@@ -27,7 +27,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.fragment:fragment-ktx:1.4.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     implementation("com.chesire.lintrules:lint-gradle:1.2.6")
     implementation("com.chesire.lintrules:lint-xml:1.2.6")
     implementation("com.github.hadilq:live-event:1.3.0")
