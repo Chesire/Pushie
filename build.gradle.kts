@@ -5,7 +5,7 @@ import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.1.1")
@@ -21,7 +21,7 @@ plugins {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 

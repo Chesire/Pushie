@@ -22,6 +22,4 @@ dependencies {
     implementation(project(":library:resources"))
 
     implementation("androidx.preference:preference-ktx:1.2.0")
-    implementation("com.chesire.lintrules:lint-gradle:1.2.6")
-    implementation("com.chesire.lintrules:lint-xml:1.2.6")
 }
