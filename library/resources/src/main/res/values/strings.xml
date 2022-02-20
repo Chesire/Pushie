@@ -4,6 +4,7 @@
     <string name="process_text_action_text">Pushie</string>
 
     <string name="password_hint">Enter password</string>
+    <string name="password_label">Password</string>
     <string name="days_expiry_text">Days till expiry</string>
     <string name="views_expiry_text">Views till expiry</string>
     <string name="main_send">Send</string>
