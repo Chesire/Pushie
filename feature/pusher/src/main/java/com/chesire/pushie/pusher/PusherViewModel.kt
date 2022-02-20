@@ -3,6 +3,8 @@ package com.chesire.pushie.pusher
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 
@@ -43,13 +45,14 @@ class PusherViewModel(
 
         _apiState.postValue(ApiState.InProgress)
         viewModelScope.launch {
-            when (val result = pushInteractor.sendNewPassword(password, expiryDays, expiryViews)) {
-                is SendPasswordResult.Success -> {
-                    clipboardInteractor.copyToClipboard(result.url)
+            pushInteractor.sendNewPassword(password, expiryDays, expiryViews)
+                .onSuccess {
+                    clipboardInteractor.copyToClipboard(it.url)
                     _apiState.postValue(ApiState.Success)
                 }
-                SendPasswordResult.Error -> _apiState.postValue(ApiState.Failure)
-            }
+                .onFailure {
+                    _apiState.postValue(ApiState.Failure)
+                }
         }
     }
 
