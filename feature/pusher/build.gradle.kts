@@ -28,6 +28,7 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("androidx.compose.material:material:1.1.0")
+    implementation("androidx.compose.material:material-icons-extended:1.1.0")
     implementation("androidx.compose.runtime:runtime:1.1.0")
     implementation("androidx.compose.ui:ui-tooling:1.1.0")
     implementation("androidx.core:core-ktx:1.7.0")
