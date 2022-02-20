@@ -1,15 +1,18 @@
 package com.chesire.pushie.pusher
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Slider
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -22,11 +25,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.chesire.pushie.compose.components.PushieNumberPicker
 import com.chesire.pushie.compose.components.PushieText
 
 @Composable
@@ -38,13 +41,8 @@ fun PusherScreen(
         modifier = Modifier.padding(16.dp)
     ) {
         PasswordInput()
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            DaysInput()
-            Spacer(modifier = Modifier.weight(1f))
-            ViewsInput()
-        }
+        DaysInput()
+        ViewsInput()
         SendButton(onSendClicked)
     }
 }
@@ -67,14 +65,16 @@ private fun PasswordInput() {
             } else {
                 Icons.Default.VisibilityOff
             }
-            IconButton(onClick = {
-                passwordVisibility = !passwordVisibility
-            }) {
+            IconButton(
+                onClick = { passwordVisibility = !passwordVisibility }
+            ) {
                 Icon(image, null)
             }
         },
         label = { Text(text = stringResource(id = R.string.password_label)) },
         onValueChange = { text = it },
+        textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colors.onBackground),
+        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Send),
         modifier = Modifier.fillMaxWidth()
     )
 }
@@ -85,8 +85,15 @@ private fun DaysInput() {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(16.dp)
     ) {
+        var sliderPosition by remember { mutableStateOf(0f) }
+
         PushieText(text = stringResource(id = R.string.days_expiry_text))
-        PushieNumberPicker(1, 1..90)
+        PushieText(text = sliderPosition.toInt().toString())
+        Slider(
+            value = sliderPosition,
+            valueRange = 1f..90f,
+            onValueChange = { sliderPosition = it }
+        )
     }
 }
 
@@ -96,20 +103,26 @@ private fun ViewsInput() {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(16.dp)
     ) {
+        var sliderPosition by remember { mutableStateOf(0f) }
+
         PushieText(text = stringResource(id = R.string.views_expiry_text))
-        PushieNumberPicker(1, 1..100)
+        PushieText(text = sliderPosition.toInt().toString())
+        Slider(
+            value = sliderPosition,
+            valueRange = 1f..100f,
+            onValueChange = { sliderPosition = it }
+        )
     }
 }
 
 @Composable
 private fun SendButton(onSendClicked: () -> Unit) {
     Button(
-        onClick = onSendClicked
+        onClick = onSendClicked,
+        contentPadding = PaddingValues(16.dp),
+        modifier = Modifier.defaultMinSize(100.dp, 48.dp)
     ) {
-        Text(
-            modifier = Modifier.padding(8.dp),
-            text = stringResource(id = R.string.main_send)
-        )
+        Text(text = stringResource(id = R.string.main_send))
     }
 }
 

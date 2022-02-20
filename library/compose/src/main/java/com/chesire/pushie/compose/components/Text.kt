@@ -8,6 +8,6 @@ import androidx.compose.runtime.Composable
 fun PushieText(text: String) {
     Text(
         text = text,
-        color = MaterialTheme.colors.primary
+        color = MaterialTheme.colors.onBackground
     )
 }

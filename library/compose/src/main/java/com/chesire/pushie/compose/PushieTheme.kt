@@ -20,9 +20,9 @@ object PushieTheme {
         // error = x,
         onPrimary = Color.Black,
         // onSecondary = x,
-        onBackground = PushieColors.Yellow,
-        onSurface = PushieColors.Yellow,
-        onError = PushieColors.Test
+        onBackground = PushieColors.White,
+        onSurface = PushieColors.White,
+        // onError = x
     )
     internal val LightColors = DarkColors // TODO: Implement a light theme
 }
