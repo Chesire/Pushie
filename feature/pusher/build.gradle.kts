@@ -1,5 +1,6 @@
 plugins {
     id("com.android.library")
+    id("kotlin-parcelize")
     kotlin("android")
 }
 
@@ -30,6 +31,7 @@ dependencies {
     implementation("androidx.compose.material:material:1.1.0")
     implementation("androidx.compose.material:material-icons-extended:1.1.0")
     implementation("androidx.compose.runtime:runtime:1.1.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.0")
     implementation("androidx.compose.ui:ui-tooling:1.1.0")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.fragment:fragment-ktx:1.4.1")

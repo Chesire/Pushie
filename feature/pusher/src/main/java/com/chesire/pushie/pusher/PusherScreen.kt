@@ -18,8 +18,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -34,26 +36,34 @@ import com.chesire.pushie.compose.components.PushieText
 
 @Composable
 fun PusherScreen(
+    viewState: State<ViewState?>,
+    onPasswordChanged: (String) -> Unit,
+    onExpiryDaysChanged: (Int) -> Unit,
+    onExpiryViewsChanged: (Int) -> Unit,
     onSendClicked: () -> Unit
 ) {
+    val state = requireNotNull(viewState.value)
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(16.dp)
     ) {
-        PasswordInput()
-        DaysInput()
-        ViewsInput()
+        PasswordInput(state.passwordText, onPasswordChanged)
+        DaysInput(state.expiryDays, onExpiryDaysChanged)
+        ViewsInput(state.expiryViews, onExpiryViewsChanged)
         SendButton(onSendClicked)
     }
 }
 
 @Composable
-private fun PasswordInput() {
+private fun PasswordInput(
+    passwordText: String,
+    onPasswordChanged: (String) -> Unit
+) {
     var passwordVisibility by remember { mutableStateOf(false) }
-    var text by remember { mutableStateOf("") }
 
     OutlinedTextField(
-        value = text,
+        value = passwordText,
         visualTransformation = if (passwordVisibility) {
             VisualTransformation.None
         } else {
@@ -72,7 +82,7 @@ private fun PasswordInput() {
             }
         },
         label = { Text(text = stringResource(id = R.string.password_label)) },
-        onValueChange = { text = it },
+        onValueChange = { onPasswordChanged(it) },
         textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colors.onBackground),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Send),
         modifier = Modifier.fillMaxWidth()
@@ -80,37 +90,49 @@ private fun PasswordInput() {
 }
 
 @Composable
-private fun DaysInput() {
+private fun DaysInput(
+    expiryDays: Int,
+    onExpiryDaysChanged: (Int) -> Unit
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(16.dp)
     ) {
-        var sliderPosition by remember { mutableStateOf(0f) }
+        var sliderPosition by remember { mutableStateOf(expiryDays.toFloat()) }
 
         PushieText(text = stringResource(id = R.string.days_expiry_text))
         PushieText(text = sliderPosition.toInt().toString())
         Slider(
             value = sliderPosition,
             valueRange = 1f..90f,
-            onValueChange = { sliderPosition = it }
+            onValueChange = {
+                sliderPosition = it
+                onExpiryDaysChanged(it.toInt())
+            }
         )
     }
 }
 
 @Composable
-private fun ViewsInput() {
+private fun ViewsInput(
+    expiryView: Int,
+    onExpiryViewsChanged: (Int) -> Unit
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(16.dp)
     ) {
-        var sliderPosition by remember { mutableStateOf(0f) }
+        var sliderPosition by remember { mutableStateOf(expiryView.toFloat()) }
 
         PushieText(text = stringResource(id = R.string.views_expiry_text))
         PushieText(text = sliderPosition.toInt().toString())
         Slider(
             value = sliderPosition,
             valueRange = 1f..100f,
-            onValueChange = { sliderPosition = it }
+            onValueChange = {
+                sliderPosition = it
+                onExpiryViewsChanged(it.toInt())
+            }
         )
     }
 }
@@ -129,5 +151,16 @@ private fun SendButton(onSendClicked: () -> Unit) {
 @Composable
 @Preview
 private fun Preview() {
-    PusherScreen { /* */ }
+    val viewState = ViewState(
+        passwordText = "",
+        expiryDays = 7,
+        expiryViews = 5
+    )
+    val state = produceState(
+        initialValue = viewState,
+        producer = {
+            value = viewState
+        }
+    )
+    PusherScreen(viewState = state, {/* */ }, {/* */ }, {/* */ }, {/* */ })
 }
