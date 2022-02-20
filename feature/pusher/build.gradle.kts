@@ -35,7 +35,6 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.4.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
-    implementation("com.chargemap.compose:numberpicker:0.0.11")
     implementation("com.github.hadilq:live-event:1.3.0")
     implementation("com.google.android.material:material:1.5.0")
     implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")

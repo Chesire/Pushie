@@ -1,32 +1,30 @@
 package com.chesire.pushie.compose
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 
 object PushieTheme {
-    // private val DarkGrey = Color(0xFF171717)
-    private val Yellow = Color(0xFFFEFE53)
-    private val Test = Color.Green
-
     internal val DarkColors = darkColors(
-        primary = Yellow,
-        primaryVariant = Yellow,
+        primary = PushieColors.Yellow,
+        primaryVariant = PushieColors.Yellow,
         // secondary = x,
         // secondaryVariant = x,
-        // background = x,
-        // surface = x,
+        background = PushieColors.DarkGrey,
+        surface = PushieColors.DarkGrey,
         // error = x,
-        onPrimary = Color.White,
+        onPrimary = Color.Black,
         // onSecondary = x,
-        // onBackground = x,
-        onSurface = Yellow,
-        onError = Test
+        onBackground = PushieColors.Yellow,
+        onSurface = PushieColors.Yellow,
+        onError = PushieColors.Test
     )
-    internal val LightColors = lightColors()
+    internal val LightColors = DarkColors // TODO: Implement a light theme
 }
 
 @Composable
@@ -34,9 +32,10 @@ fun PushieTheme(
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider {
-        // val colours = if (isSystemInDarkTheme()) PushieTheme.DarkColors else PushieTheme.LightColors
+        val colours = if (isSystemInDarkTheme()) PushieTheme.DarkColors else PushieTheme.LightColors
+
         MaterialTheme(
-            colors = PushieTheme.DarkColors,
+            colors = colours,
             typography = MaterialTheme.typography,
             shapes = MaterialTheme.shapes,
             content = content

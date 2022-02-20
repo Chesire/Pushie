@@ -26,7 +26,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.chargemap.compose.numberpicker.NumberPicker
+import com.chesire.pushie.compose.components.PushieNumberPicker
+import com.chesire.pushie.compose.components.PushieText
 
 @Composable
 fun PusherScreen(
@@ -80,35 +81,23 @@ private fun PasswordInput() {
 
 @Composable
 private fun DaysInput() {
-    var daysValue by remember { mutableStateOf(1) }
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(16.dp)
     ) {
-        Text(text = stringResource(id = R.string.days_expiry_text))
-        NumberPicker(
-            value = daysValue,
-            range = 1..90,
-            onValueChange = { daysValue = it }
-        )
+        PushieText(text = stringResource(id = R.string.days_expiry_text))
+        PushieNumberPicker(1, 1..90)
     }
 }
 
 @Composable
 private fun ViewsInput() {
-    var viewsValue by remember { mutableStateOf(1) }
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(16.dp)
     ) {
-        Text(text = stringResource(id = R.string.views_expiry_text))
-        NumberPicker(
-            value = viewsValue,
-            range = 1..100,
-            onValueChange = { viewsValue = it }
-        )
+        PushieText(text = stringResource(id = R.string.views_expiry_text))
+        PushieNumberPicker(1, 1..100)
     }
 }
 
