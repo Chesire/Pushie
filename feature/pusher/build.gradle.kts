@@ -15,6 +15,9 @@ android {
     buildFeatures {
         compose = true
     }
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+    }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.1.0"
     }

@@ -62,9 +62,9 @@ class PusherViewModel(
                 state.set(VIEW_KEY, newData)
             }
             is Action.SubmitPassword -> sendApiRequest(
-                action.password,
-                action.expiryDays,
-                action.expiryViews
+                _viewState.passwordText,
+                _viewState.expiryDays,
+                _viewState.expiryViews
             )
         }
     }
@@ -106,12 +106,7 @@ sealed class Action {
     data class PasswordChanged(val newPassword: String) : Action()
     data class ExpiryDaysChanged(val newDays: Int) : Action()
     data class ExpiryViewsChanged(val newViews: Int) : Action()
-
-    data class SubmitPassword(
-        val password: String,
-        val expiryDays: Int,
-        val expiryViews: Int
-    ) : Action()
+    object SubmitPassword : Action()
 }
 
 @Parcelize

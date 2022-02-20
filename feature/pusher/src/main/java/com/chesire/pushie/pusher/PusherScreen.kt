@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
@@ -25,7 +26,9 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -51,19 +54,22 @@ fun PusherScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(16.dp)
     ) {
-        PasswordInput(state.passwordText, onPasswordChanged)
+        PasswordInput(state.passwordText, onPasswordChanged, onSendClicked)
         DaysInput(state.expiryDays, onExpiryDaysChanged)
         ViewsInput(state.expiryViews, onExpiryViewsChanged)
         SendButton(onSendClicked)
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun PasswordInput(
     passwordText: String,
-    onPasswordChanged: (String) -> Unit
+    onPasswordChanged: (String) -> Unit,
+    onSendClicked: () -> Unit
 ) {
     var passwordVisibility by remember { mutableStateOf(false) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     OutlinedTextField(
         value = passwordText,
@@ -93,6 +99,10 @@ private fun PasswordInput(
             autoCorrect = false,
             keyboardType = KeyboardType.Password
         ),
+        keyboardActions = KeyboardActions {
+            onSendClicked()
+            keyboardController?.hide()
+        },
         modifier = Modifier.fillMaxWidth()
     )
 }
@@ -145,10 +155,16 @@ private fun ViewsInput(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun SendButton(onSendClicked: () -> Unit) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Button(
-        onClick = onSendClicked,
+        onClick = {
+            onSendClicked()
+            keyboardController?.hide()
+        },
         contentPadding = PaddingValues(16.dp),
         modifier = Modifier.defaultMinSize(100.dp, 48.dp)
     ) {
