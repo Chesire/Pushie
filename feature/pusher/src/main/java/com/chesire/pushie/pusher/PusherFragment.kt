@@ -63,15 +63,9 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
             PushieTheme {
                 PusherScreen(
                     viewState = viewModel.viewState.observeAsState(),
-                    onPasswordChanged = {
-                        viewModel.execute(Action.PasswordChanged(it))
-                    },
-                    onExpiryDaysChanged = {
-                        viewModel.execute(Action.ExpiryDaysChanged(it))
-                    },
-                    onExpiryViewsChanged = {
-                        viewModel.execute(Action.ExpiryViewsChanged(it))
-                    },
+                    onPasswordChanged = { viewModel.execute(Action.PasswordChanged(it)) },
+                    onExpiryDaysChanged = { viewModel.execute(Action.ExpiryDaysChanged(it)) },
+                    onExpiryViewsChanged = { viewModel.execute(Action.ExpiryViewsChanged(it)) },
                     onSendClicked = {
                         viewModel.execute(Action.SubmitPassword("", 0, 0))
                         // TODO: Close keyboard?

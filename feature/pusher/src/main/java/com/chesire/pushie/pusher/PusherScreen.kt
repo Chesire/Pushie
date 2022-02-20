@@ -28,6 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,6 +46,7 @@ fun PusherScreen(
 ) {
     val state = requireNotNull(viewState.value)
 
+    // TODO: Scrollable
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(16.dp)
@@ -84,7 +87,12 @@ private fun PasswordInput(
         label = { Text(text = stringResource(id = R.string.password_label)) },
         onValueChange = { onPasswordChanged(it) },
         textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colors.onBackground),
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Send),
+        keyboardOptions = KeyboardOptions.Default.copy(
+            imeAction = ImeAction.Send,
+            capitalization = KeyboardCapitalization.None,
+            autoCorrect = false,
+            keyboardType = KeyboardType.Password
+        ),
         modifier = Modifier.fillMaxWidth()
     )
 }
