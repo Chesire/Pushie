@@ -1,6 +1,7 @@
 package com.chesire.pushie.pusher
 
 import android.os.Parcelable
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -17,17 +18,17 @@ private const val VIEW_KEY = "PusherViewKey"
  * ViewModel to use with the [PusherFragment].
  */
 class PusherViewModel(
-    private val state: SavedStateHandle,
+    state: SavedStateHandle,
     private val pushInteractor: PusherInteractor,
     private val clipboardInteractor: ClipboardInteractor
 ) : ViewModel() {
 
-    private val _apiState = LiveEvent<ApiState>()
+    private val _apiState = LiveEvent<ApiResult>()
 
     /**
-     * The current state of the api request.
+     * The result of the api request.
      */
-    val apiState: LiveData<ApiState>
+    val apiResult: LiveData<ApiResult>
         get() = _apiState
 
     /**
@@ -69,8 +70,7 @@ class PusherViewModel(
 
     private fun sendApiRequest(password: String, expiryDays: Int, expiryViews: Int) {
         if (password.isBlank()) {
-            // TODO: Post error somehow
-            // _apiState.postValue(ApiState.EmptyPassword)
+            _apiState.postValue(ApiResult.EmptyPassword)
             return
         }
 
@@ -80,24 +80,13 @@ class PusherViewModel(
                 .onSuccess {
                     viewState.postValue(_viewState.copy(isLoading = false))
                     clipboardInteractor.copyToClipboard(it.url)
-                    // TODO: Post success somehow
-                    // _apiState.postValue(ApiState.Success)
+                    _apiState.postValue(ApiResult.Success)
                 }
                 .onFailure {
                     viewState.postValue(_viewState.copy(isLoading = false))
-                    // TODO: Post error somehow
-                    // _apiState.postValue(ApiState.Failure)
+                    _apiState.postValue(ApiResult.Failure)
                 }
         }
-    }
-
-    /**
-     * Different possible states of the api request.
-     */
-    enum class ApiState {
-        Success,
-        Failure,
-        EmptyPassword
     }
 }
 
@@ -118,3 +107,13 @@ data class ViewState(
     val expiryViews: Int,
     val isLoading: Boolean
 ) : Parcelable
+
+
+/**
+ * Different possible states of the api request.
+ */
+sealed class ApiResult(@StringRes val stringId: Int) {
+    object Success : ApiResult(R.string.result_success)
+    object Failure : ApiResult(R.string.result_failure)
+    object EmptyPassword : ApiResult(R.string.result_empty_password)
+}

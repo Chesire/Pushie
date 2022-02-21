@@ -3,6 +3,7 @@ package com.chesire.pushie.pusher
 import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
@@ -18,6 +19,7 @@ import com.chesire.pushie.compose.PushieTheme
 import com.chesire.pushie.datasource.pwpush.PWPushRepository
 import com.chesire.pushie.datasource.pwpush.remote.PusherApi
 import com.chesire.pushie.datastore.PreferenceStore
+import com.google.android.material.snackbar.Snackbar
 import okhttp3.OkHttpClient
 
 /**
@@ -71,25 +73,13 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
         }
     }
 
-    private fun initializeViewModel() {
-        viewModel.apiState.observe(viewLifecycleOwner) { state ->
-            //when (state) {
-            //    PusherViewModel.ApiState.Success -> {
-            //        Snackbar
-            //            .make(binding.root, R.string.result_success, Snackbar.LENGTH_LONG)
-            //            .show()
-            //    }
-            //    PusherViewModel.ApiState.Failure -> {
-            //        Snackbar
-            //            .make(binding.root, R.string.result_failure, Snackbar.LENGTH_LONG)
-            //            .show()
-            //    }
-            //    PusherViewModel.ApiState.EmptyPassword -> {
-            //        Snackbar
-            //            .make(binding.root, R.string.result_empty_password, Snackbar.LENGTH_LONG)
-            //            .show()
-            //    }
-            //}
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Ideally this would be handled in Compose, but would be better if this screen also
+        // contained the toolbar.
+        viewModel.apiResult.observe(viewLifecycleOwner) { state ->
+            Snackbar.make(view, state.stringId, Snackbar.LENGTH_LONG).show()
         }
     }
 
