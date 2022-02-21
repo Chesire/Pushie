@@ -51,15 +51,9 @@ class PusherViewModel(
      */
     fun execute(action: Action) {
         when (action) {
-            is Action.PasswordChanged -> {
-                viewState.postValue(_viewState.copy(passwordText = action.newPassword))
-            }
-            is Action.ExpiryDaysChanged -> {
-                viewState.postValue(_viewState.copy(expiryDays = action.newDays))
-            }
-            is Action.ExpiryViewsChanged -> {
-                viewState.postValue(_viewState.copy(expiryViews = action.newViews))
-            }
+            is Action.PasswordChanged -> viewState.postValue(_viewState.copy(passwordText = action.newPassword))
+            is Action.ExpiryDaysChanged -> viewState.postValue(_viewState.copy(expiryDays = action.newDays))
+            is Action.ExpiryViewsChanged -> viewState.postValue(_viewState.copy(expiryViews = action.newViews))
             is Action.SubmitPassword -> sendApiRequest(
                 _viewState.passwordText,
                 _viewState.expiryDays,
@@ -107,7 +101,6 @@ data class ViewState(
     val expiryViews: Int,
     val isLoading: Boolean
 ) : Parcelable
-
 
 /**
  * Different possible states of the api request.
