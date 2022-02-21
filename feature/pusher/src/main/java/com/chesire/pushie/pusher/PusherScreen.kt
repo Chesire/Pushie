@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
@@ -49,11 +51,13 @@ fun PusherScreen(
     onSendClicked: () -> Unit
 ) {
     val state = requireNotNull(viewState.value)
+    val scrollState = rememberScrollState()
 
-    // TODO: Scrollable
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .padding(16.dp)
+            .verticalScroll(scrollState)
     ) {
         PasswordInput(state.passwordText, onPasswordChanged, onSendClicked)
         DaysInput(state.expiryDays, onExpiryDaysChanged)
