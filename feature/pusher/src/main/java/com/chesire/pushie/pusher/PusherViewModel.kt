@@ -51,16 +51,13 @@ class PusherViewModel(
     fun execute(action: Action) {
         when (action) {
             is Action.PasswordChanged -> {
-                val newData = _viewState.copy(passwordText = action.newPassword)
-                state.set(VIEW_KEY, newData)
+                viewState.postValue(_viewState.copy(passwordText = action.newPassword))
             }
             is Action.ExpiryDaysChanged -> {
-                val newData = _viewState.copy(expiryDays = action.newDays)
-                state.set(VIEW_KEY, newData)
+                viewState.postValue(_viewState.copy(expiryDays = action.newDays))
             }
             is Action.ExpiryViewsChanged -> {
-                val newData = _viewState.copy(expiryViews = action.newViews)
-                state.set(VIEW_KEY, newData)
+                viewState.postValue(_viewState.copy(expiryViews = action.newViews))
             }
             is Action.SubmitPassword -> sendApiRequest(
                 _viewState.passwordText,
