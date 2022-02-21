@@ -25,7 +25,7 @@ import okhttp3.OkHttpClient
 /**
  * Fragment for the main screen of the application, that allows users to use the api service.
  */
-class PusherFragment : Fragment(R.layout.fragment_pusher) {
+class PusherFragment : Fragment() {
 
     inner class PusherViewModelFactory(
         owner: SavedStateRegistryOwner,
