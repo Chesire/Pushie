@@ -196,5 +196,5 @@ private fun Preview() {
             value = viewState
         }
     )
-    PusherScreen(viewState = state, {/* */ }, {/* */ }, {/* */ }, {/* */ })
+    PusherScreen(viewState = state, { /* */ }, { /* */ }, { /* */ }, { /* */ })
 }
