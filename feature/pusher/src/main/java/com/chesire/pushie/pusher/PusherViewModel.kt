@@ -38,7 +38,8 @@ class PusherViewModel(
         ViewState(
             passwordText = state.get<String>(PW_KEY) ?: "",
             expiryDays = state.get<Int>(DAYS_PICKER_BUNDLE_KEY) ?: 7,
-            expiryViews = state.get<Int>(VIEWS_PICKER_BUNDLE_KEY) ?: 5
+            expiryViews = state.get<Int>(VIEWS_PICKER_BUNDLE_KEY) ?: 5,
+            isLoading = false
         )
     )
     private val _viewState: ViewState
@@ -71,19 +72,24 @@ class PusherViewModel(
 
     private fun sendApiRequest(password: String, expiryDays: Int, expiryViews: Int) {
         if (password.isBlank()) {
-            _apiState.postValue(ApiState.EmptyPassword)
+            // TODO: Post error somehow
+            // _apiState.postValue(ApiState.EmptyPassword)
             return
         }
 
-        _apiState.postValue(ApiState.InProgress)
+        viewState.postValue(_viewState.copy(isLoading = true))
         viewModelScope.launch {
             pushInteractor.sendNewPassword(password, expiryDays, expiryViews)
                 .onSuccess {
+                    viewState.postValue(_viewState.copy(isLoading = false))
                     clipboardInteractor.copyToClipboard(it.url)
-                    _apiState.postValue(ApiState.Success)
+                    // TODO: Post success somehow
+                    // _apiState.postValue(ApiState.Success)
                 }
                 .onFailure {
-                    _apiState.postValue(ApiState.Failure)
+                    viewState.postValue(_viewState.copy(isLoading = false))
+                    // TODO: Post error somehow
+                    // _apiState.postValue(ApiState.Failure)
                 }
         }
     }
@@ -92,7 +98,6 @@ class PusherViewModel(
      * Different possible states of the api request.
      */
     enum class ApiState {
-        InProgress,
         Success,
         Failure,
         EmptyPassword
@@ -113,5 +118,6 @@ sealed class Action {
 data class ViewState(
     val passwordText: String,
     val expiryDays: Int,
-    val expiryViews: Int
+    val expiryViews: Int,
+    val isLoading: Boolean
 ) : Parcelable

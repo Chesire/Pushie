@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalTextStyle
@@ -57,7 +58,11 @@ fun PusherScreen(
         PasswordInput(state.passwordText, onPasswordChanged, onSendClicked)
         DaysInput(state.expiryDays, onExpiryDaysChanged)
         ViewsInput(state.expiryViews, onExpiryViewsChanged)
-        SendButton(onSendClicked)
+        if (state.isLoading) {
+            CircularProgressIndicator()
+        } else {
+            SendButton(onSendClicked)
+        }
     }
 }
 
@@ -178,7 +183,8 @@ private fun Preview() {
     val viewState = ViewState(
         passwordText = "",
         expiryDays = 7,
-        expiryViews = 5
+        expiryViews = 5,
+        isLoading = false
     )
     val state = produceState(
         initialValue = viewState,

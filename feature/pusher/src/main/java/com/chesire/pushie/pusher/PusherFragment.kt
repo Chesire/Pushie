@@ -74,37 +74,23 @@ class PusherFragment : Fragment(R.layout.fragment_pusher) {
     private fun initializeViewModel() {
         viewModel.apiState.observe(viewLifecycleOwner) { state ->
             //when (state) {
-            //    PusherViewModel.ApiState.InProgress -> setLoadingIndicatorState(true)
             //    PusherViewModel.ApiState.Success -> {
-            //        setLoadingIndicatorState(false)
             //        Snackbar
             //            .make(binding.root, R.string.result_success, Snackbar.LENGTH_LONG)
             //            .show()
             //    }
             //    PusherViewModel.ApiState.Failure -> {
-            //        setLoadingIndicatorState(false)
             //        Snackbar
             //            .make(binding.root, R.string.result_failure, Snackbar.LENGTH_LONG)
             //            .show()
             //    }
             //    PusherViewModel.ApiState.EmptyPassword -> {
-            //        setLoadingIndicatorState(false)
             //        Snackbar
             //            .make(binding.root, R.string.result_empty_password, Snackbar.LENGTH_LONG)
             //            .show()
             //    }
             //}
         }
-    }
-
-    private fun setLoadingIndicatorState(visible: Boolean) {
-        //if (visible) {
-        //    binding.sendButton.visibility = View.INVISIBLE
-        //    binding.sendProgress.visibility = View.VISIBLE
-        //} else {
-        //    binding.sendButton.visibility = View.VISIBLE
-        //    binding.sendProgress.visibility = View.INVISIBLE
-        //}
     }
 
     companion object {
