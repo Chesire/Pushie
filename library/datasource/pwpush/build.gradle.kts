@@ -21,7 +21,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
 
     testImplementation("junit:junit:4.13.2")
