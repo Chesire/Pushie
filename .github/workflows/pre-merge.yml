@@ -40,14 +40,14 @@ jobs:
     - name: run lintDebug
       run: ./gradlew lintDebug
     - name: upload lint results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: lint
         path: app/build/reports/
     - name: run detektCheck
       run: ./gradlew detektCheck
     - name: upload detekt results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: detekt
         path: build/reports/
