@@ -42,7 +42,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     implementation("com.github.hadilq:live-event:1.3.0")
     implementation("com.google.android.material:material:1.5.0")
-    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")
+    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.15")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
 
     testImplementation("junit:junit:4.13.2")
