@@ -9,7 +9,7 @@
     <string name="views_expiry_text">パスワードを削除するの閲覧可能回数</string>
     <string name="main_send">送信</string>
 
-    <string name="result_success">パスワードがクリップボードにコピーされました</string>
+    <string name="result_success">URLがクリップボードにコピーされました</string>
     <string name="result_failure">リクエストに失敗しました。もう一度やり直してください...</string>
     <string name="result_empty_password">パスワードを入力してください</string>
 
