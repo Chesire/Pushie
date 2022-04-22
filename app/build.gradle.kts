@@ -12,7 +12,7 @@ android {
         versionCode = 11
         versionName = "2.0.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        resourceConfigurations.add("en")
+        resourceConfigurations.addAll(listOf("en", "ja"))
     }
     buildTypes {
         getByName("release") {
