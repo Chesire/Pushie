@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Pushie</string>
+
+    <string name="process_text_action_text">Pushie</string>
+
+    <string name="password_hint">パスワードを入力</string>
+    <string name="password_label">パスワード</string>
+    <string name="days_expiry_text">パスワードを削除するまでの日数</string>
+    <string name="views_expiry_text">パスワードを削除するの閲覧可能回数</string>
+    <string name="main_send">送信</string>
+  
+    <string name="result_success">URLがクリップボードにコピーされました</string>
+    <string name="result_failure">リクエストに失敗しました。もう一度やり直してください...</string>
+    <string name="result_empty_password">パスワードを入力してください</string>
+  
+    <string name="settings_title">設定</string>
+    <string name="settings_default_url_title">PushieのURLを入力</string>
+    <string name="settings_default_url_summary">詳細：APIに使用するURLを設定します</string>
+</resources>
