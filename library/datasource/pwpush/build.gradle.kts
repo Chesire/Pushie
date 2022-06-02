@@ -17,7 +17,7 @@ dependencies {
     implementation(project(":library:common"))
     implementation(project(":library:datastore"))
 
-    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.16")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")

@@ -30,7 +30,7 @@ dependencies {
     implementation(project(":library:datastore"))
     implementation(project(":library:resources"))
 
-    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("androidx.compose.material:material:1.1.1")
     implementation("androidx.compose.material:material-icons-extended:1.1.1")
     implementation("androidx.compose.runtime:runtime:1.1.1")
