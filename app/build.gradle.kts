@@ -40,7 +40,7 @@ dependencies {
     implementation(project(":library:datastore"))
     implementation(project(":library:resources"))
 
-    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("androidx.compose.runtime:runtime:1.1.1")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("com.google.android.material:material:1.6.0")
