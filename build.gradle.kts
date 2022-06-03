@@ -9,13 +9,13 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.2.1")
-        classpath(kotlin("gradle-plugin", "1.6.10"))
+        classpath(kotlin("gradle-plugin", libs.versions.kotlin.get()))
     }
 }
 
 plugins {
-    id("io.gitlab.arturbosch.detekt") version "1.19.0"
-    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
 }
 
 allprojects {

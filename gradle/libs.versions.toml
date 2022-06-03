@@ -1,0 +1,10 @@
+[versions]
+kotlin = "1.6.21"
+
+[libraries]
+# koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
+# logback = { module = "ch.qos.logback:logback-classic", version = "1.2.11" }
+
+[plugins]
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.19.0" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "10.3.0" }
