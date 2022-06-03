@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "assignees": [
+    "Chesire"
+  ],
+  "branchPrefix": "deps/",
+  "labels": [
+    "dependencies"
+  ],
+  "bundler": {
+    "rangeStrategy": "update-lockfile"
+  },
+  "npm": {
+    "enabled": false
+  }
+}
