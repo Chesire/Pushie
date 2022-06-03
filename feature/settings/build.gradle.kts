@@ -20,6 +20,5 @@ android {
 dependencies {
     implementation(project(":library:datastore"))
     implementation(project(":library:resources"))
-
     implementation(libs.androidx.preference)
 }

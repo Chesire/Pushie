@@ -39,7 +39,6 @@ dependencies {
     implementation(project(":library:datasource:pwpush"))
     implementation(project(":library:datastore"))
     implementation(project(":library:resources"))
-
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.preference)
