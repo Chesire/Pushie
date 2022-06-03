@@ -39,9 +39,8 @@ dependencies {
     implementation(project(":library:datasource:pwpush"))
     implementation(project(":library:datastore"))
     implementation(project(":library:resources"))
-
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("androidx.compose.runtime:runtime:1.1.1")
-    implementation("androidx.preference:preference-ktx:1.2.0")
-    implementation("com.google.android.material:material:1.6.1")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.preference)
+    implementation(libs.google.material)
 }

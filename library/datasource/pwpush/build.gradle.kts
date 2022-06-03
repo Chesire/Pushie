@@ -16,13 +16,12 @@ android {
 dependencies {
     implementation(project(":library:common"))
     implementation(project(":library:datastore"))
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core)
+    implementation(libs.kotlin.coroutines.android)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.result)
+    implementation(libs.okhttp)
 
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("androidx.core:core-ktx:1.8.0")
-    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.16")
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
-
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(libs.junit)
 }

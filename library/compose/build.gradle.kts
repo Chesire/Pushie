@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.material:material:1.1.1")
-    implementation("androidx.compose.runtime:runtime:1.1.1")
-    implementation("androidx.compose.ui:ui-tooling:1.1.1")
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.ui)
 }
