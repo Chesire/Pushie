@@ -9,6 +9,7 @@ androidx-compose-material = { module = "androidx.compose.material:material", ver
 androidx-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-core = { module = "androidx.core:core-ktx", version = "1.8.0" }
+androidx-preference = { module = "androidx.preference:preference-ktx", version = "1.2.0" }
 junit = { module = "junit:junit", version = "4.13.2" }
 kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }

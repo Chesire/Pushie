@@ -21,5 +21,5 @@ dependencies {
     implementation(project(":library:datastore"))
     implementation(project(":library:resources"))
 
-    implementation("androidx.preference:preference-ktx:1.2.0")
+    implementation(libs.androidx.preference)
 }
