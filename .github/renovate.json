@@ -11,5 +11,8 @@
   ],
   "bundler": {
     "rangeStrategy": "update-lockfile"
+  },
+  "npm": {
+    "enabled": false
   }
 }
