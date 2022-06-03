@@ -1,9 +1,15 @@
 [versions]
+coroutines = "1.6.2"
 kotlin = "1.6.21"
 
 [libraries]
-# koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
-# logback = { module = "ch.qos.logback:logback-classic", version = "1.2.11" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.4.2" }
+androidx-core = { module = "androidx.core:core-ktx", version = "1.8.0" }
+junit = { module = "junit:junit", version = "4.13.2" }
+kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlin-result = { module = "com.michael-bull.kotlin-result:kotlin-result", version = "1.1.16" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version = "4.9.3" }
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.19.0" }
