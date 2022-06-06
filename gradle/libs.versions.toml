@@ -2,7 +2,6 @@
 compose = "1.1.1"
 coroutines = "1.6.2"
 hilt = "2.38.1"
-kotlin = "1.6.10"
 lifecycle = "2.4.1"
 
 [libraries]
