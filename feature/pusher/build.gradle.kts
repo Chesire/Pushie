@@ -1,7 +1,9 @@
 plugins {
     id("com.android.library")
+    id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -9,8 +11,6 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 31
-
-        consumerProguardFiles("consumer-rules.pro")
     }
     buildFeatures {
         compose = true
@@ -41,8 +41,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.liveevent)
     implementation(libs.google.material)
+    implementation(libs.hilt.android)
     implementation(libs.kotlin.result)
     implementation(libs.okhttp)
+    kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
 }

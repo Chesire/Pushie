@@ -2,11 +2,12 @@ package com.chesire.pushie.pusher
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import javax.inject.Inject
 
 /**
  * Interacts with the Clipboard to push new values into it.
  */
-class ClipboardInteractor(private val clipboard: ClipboardManager) {
+class ClipboardInteractor @Inject constructor(private val clipboard: ClipboardManager) {
 
     /**
      * Copies [value] directly into the Android clipboard.

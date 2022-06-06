@@ -1,6 +1,7 @@
 [versions]
 compose = "1.1.1"
 coroutines = "1.6.2"
+hilt = "2.38.1"
 kotlin = "1.6.10"
 lifecycle = "2.4.1"
 
@@ -17,6 +18,8 @@ androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-preference = { module = "androidx.preference:preference-ktx", version = "1.2.0" }
 google-material = { module = "com.google.android.material:material", version = "1.6.1" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"}
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt"}
 junit = { module = "junit:junit", version = "4.13.2" }
 kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }

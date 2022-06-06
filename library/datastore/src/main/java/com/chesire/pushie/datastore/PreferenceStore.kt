@@ -3,8 +3,10 @@ package com.chesire.pushie.datastore
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class PreferenceStore(context: Context) {
+class PreferenceStore @Inject constructor(@ApplicationContext context: Context) {
     private val preferences = context.getSharedPreferences(
         context.getString(R.string.preference_file_name),
         MODE_PRIVATE
