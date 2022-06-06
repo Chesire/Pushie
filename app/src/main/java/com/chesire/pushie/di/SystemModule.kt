@@ -14,7 +14,6 @@ import dagger.hilt.components.SingletonComponent
 object SystemModule {
 
     @Provides
-    fun providesClipboardManager(@ApplicationContext context: Context): ClipboardManager {
-        return context.getSystemService<ClipboardManager>() as ClipboardManager
-    }
+    fun providesClipboardManager(@ApplicationContext context: Context): ClipboardManager =
+        context.getSystemService<ClipboardManager>() as ClipboardManager
 }
