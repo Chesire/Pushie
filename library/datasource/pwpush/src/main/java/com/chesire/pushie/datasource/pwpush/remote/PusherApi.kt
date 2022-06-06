@@ -6,6 +6,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import java.io.IOException
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -18,7 +19,7 @@ import org.json.JSONObject
 /**
  * Interacts with the `pwpush.com` API.
  */
-class PusherApi(
+class PusherApi @Inject constructor(
     private val client: OkHttpClient,
     private val preferenceStore: PreferenceStore
 ) {

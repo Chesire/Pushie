@@ -9,6 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.hadilq.liveevent.LiveEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 
@@ -17,7 +19,8 @@ private const val VIEW_KEY = "PusherViewKey"
 /**
  * ViewModel to use with the [PusherFragment].
  */
-class PusherViewModel(
+@HiltViewModel
+class PusherViewModel @Inject constructor(
     state: SavedStateHandle,
     private val pushInteractor: PusherInteractor,
     private val clipboardInteractor: ClipboardInteractor

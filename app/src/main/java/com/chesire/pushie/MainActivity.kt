@@ -8,10 +8,12 @@ import androidx.fragment.app.FragmentManager
 import com.chesire.pushie.pusher.PusherFragment
 import com.chesire.pushie.settings.SettingsFragment
 import com.google.android.material.appbar.MaterialToolbar
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * The main activity for the application.
  */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

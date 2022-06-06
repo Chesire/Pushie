@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.androidx.preference)
     implementation(libs.google.material)
     implementation(libs.hilt.android)
+    implementation(libs.okhttp)
     kapt(libs.hilt.android.compiler)
 }
 

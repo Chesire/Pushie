@@ -3,11 +3,12 @@ package com.chesire.pushie.pusher
 import com.chesire.pushie.datasource.pwpush.PWPushRepository
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapEither
+import javax.inject.Inject
 
 /**
  * Interacts with the [PWPushRepository] to send up passwords and generate urls.
  */
-class PusherInteractor(private val repository: PWPushRepository) {
+class PusherInteractor @Inject constructor(private val repository: PWPushRepository) {
 
     /**
      * Sends a new password to the API, and returns a [SendPasswordResult].
