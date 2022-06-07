@@ -9,6 +9,8 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.onSuccess
 import java.util.UUID
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 /**
  * Repository to interact with the [PusherApi] remote data source, and to interact with any local
@@ -18,6 +20,14 @@ class PWPushRepository @Inject constructor(
     private val pusherApi: PusherApi,
     private val pushedDao: PushedDao
 ) {
+
+    val pushedModels: Flow<List<PushedModel>> = pushedDao
+        .flowAll()
+        .map { entities ->
+            entities.map { entity ->
+                PushedModel(entity.createdAt, entity.id)
+            }
+        }
 
     /**
      * Sends the [password] up to the API.
