@@ -3,6 +3,7 @@ compose = "1.1.1"
 coroutines = "1.6.2"
 hilt = "2.42"
 lifecycle = "2.4.1"
+room = "2.4.2"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.4.2" }
@@ -15,6 +16,9 @@ androidx-core = { module = "androidx.core:core-ktx", version = "1.8.0" }
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version = "1.4.1" }
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-room = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-preference = { module = "androidx.preference:preference-ktx", version = "1.2.0" }
 google-material = { module = "com.google.android.material:material", version = "1.6.1" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"}
