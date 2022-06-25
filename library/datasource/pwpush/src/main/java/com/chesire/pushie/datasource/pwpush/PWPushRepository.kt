@@ -21,6 +21,9 @@ class PWPushRepository @Inject constructor(
     private val pushedDao: PushedDao
 ) {
 
+    /**
+     * Flow of models.
+     */
     val pushedModels: Flow<List<PushedModel>> = pushedDao
         .flowAll()
         .map { entities ->

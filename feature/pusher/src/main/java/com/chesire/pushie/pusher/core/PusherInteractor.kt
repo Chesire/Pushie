@@ -1,4 +1,4 @@
-package com.chesire.pushie.pusher
+package com.chesire.pushie.pusher.core
 
 import com.chesire.pushie.datasource.pwpush.PWPushRepository
 import com.github.michaelbull.result.Result
@@ -9,6 +9,11 @@ import javax.inject.Inject
  * Interacts with the [PWPushRepository] to send up passwords and generate urls.
  */
 class PusherInteractor @Inject constructor(private val repository: PWPushRepository) {
+
+    /**
+     * Flow of models from the repository.
+     */
+    val models = repository.pushedModels
 
     /**
      * Sends a new password to the API, and returns a [SendPasswordResult].

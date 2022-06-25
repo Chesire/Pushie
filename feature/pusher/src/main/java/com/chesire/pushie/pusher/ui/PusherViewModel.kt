@@ -1,20 +1,25 @@
-package com.chesire.pushie.pusher
+package com.chesire.pushie.pusher.ui
 
-import android.os.Parcelable
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chesire.pushie.common.getStateFlow
+import com.chesire.pushie.pusher.DAYS_PICKER_BUNDLE_KEY
+import com.chesire.pushie.pusher.PW_KEY
+import com.chesire.pushie.pusher.R
+import com.chesire.pushie.pusher.VIEWS_PICKER_BUNDLE_KEY
+import com.chesire.pushie.pusher.core.ClipboardInteractor
+import com.chesire.pushie.pusher.core.PusherInteractor
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
-import kotlinx.parcelize.Parcelize
 
-private const val VIEW_KEY = "PusherViewKey"
+private const val STATE_KEY = "PUSHER_STATE_KEY"
 
 /**
  * ViewModel to use with the [PusherFragment].
@@ -31,33 +36,48 @@ class PusherViewModel @Inject constructor(
     /**
      * The result of the api request.
      */
-    val apiResult: LiveData<ApiResult>
-        get() = _apiState
+    val apiResult: LiveData<ApiResult> get() = _apiState
 
     /**
      * The current model of the UI.
      */
-    val viewState = state.getLiveData(
-        VIEW_KEY,
+    val viewState = state.getStateFlow(
+        STATE_KEY,
+        viewModelScope,
         ViewState(
             passwordText = state.get<String>(PW_KEY) ?: "",
             expiryDays = state.get<Int>(DAYS_PICKER_BUNDLE_KEY) ?: 7,
             expiryViews = state.get<Int>(VIEWS_PICKER_BUNDLE_KEY) ?: 5,
-            isLoading = false
+            isLoading = false,
+            previousModels = emptyList()
         )
     )
     private val _viewState: ViewState
         get() = requireNotNull(viewState.value)
 
+    init {
+        viewModelScope.launch {
+            pushInteractor.models.collect {
+                viewState.value = _viewState.copy(previousModels = it)
+            }
+        }
+    }
+
     /**
-     * Execute an [action] on the ViewModel.
+     * Execute an [viewAction] on the ViewModel.
      */
-    fun execute(action: Action) {
-        when (action) {
-            is Action.PasswordChanged -> viewState.postValue(_viewState.copy(passwordText = action.newPassword))
-            is Action.ExpiryDaysChanged -> viewState.postValue(_viewState.copy(expiryDays = action.newDays))
-            is Action.ExpiryViewsChanged -> viewState.postValue(_viewState.copy(expiryViews = action.newViews))
-            is Action.SubmitPassword -> sendApiRequest(
+    fun execute(viewAction: ViewAction) {
+        when (viewAction) {
+            is ViewAction.PasswordChanged -> viewState.value = _viewState.copy(
+                passwordText = viewAction.newPassword
+            )
+            is ViewAction.ExpiryDaysChanged -> viewState.value = _viewState.copy(
+                expiryDays = viewAction.newDays
+            )
+            is ViewAction.ExpiryViewsChanged -> viewState.value = _viewState.copy(
+                expiryViews = viewAction.newViews
+            )
+            is ViewAction.SubmitPassword -> sendApiRequest(
                 _viewState.passwordText,
                 _viewState.expiryDays,
                 _viewState.expiryViews
@@ -71,39 +91,21 @@ class PusherViewModel @Inject constructor(
             return
         }
 
-        viewState.postValue(_viewState.copy(isLoading = true))
+        viewState.value = _viewState.copy(isLoading = true)
         viewModelScope.launch {
             pushInteractor.sendNewPassword(password, expiryDays, expiryViews)
                 .onSuccess {
-                    viewState.postValue(_viewState.copy(isLoading = false))
+                    viewState.value = _viewState.copy(isLoading = false)
                     clipboardInteractor.copyToClipboard(it.url)
                     _apiState.postValue(ApiResult.Success)
                 }
                 .onFailure {
-                    viewState.postValue(_viewState.copy(isLoading = false))
+                    viewState.value = _viewState.copy(isLoading = false)
                     _apiState.postValue(ApiResult.Failure)
                 }
         }
     }
 }
-
-/**
- * Different actions that can be used on this view model.
- */
-sealed class Action {
-    data class PasswordChanged(val newPassword: String) : Action()
-    data class ExpiryDaysChanged(val newDays: Int) : Action()
-    data class ExpiryViewsChanged(val newViews: Int) : Action()
-    object SubmitPassword : Action()
-}
-
-@Parcelize
-data class ViewState(
-    val passwordText: String,
-    val expiryDays: Int,
-    val expiryViews: Int,
-    val isLoading: Boolean
-) : Parcelable
 
 /**
  * Different possible states of the api request.

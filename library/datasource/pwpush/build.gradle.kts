@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
 }
