@@ -5,4 +5,9 @@
         android:key="@string/key_default_url"
         android:summary="@string/settings_default_url_summary"
         android:title="@string/settings_default_url_title" />
+
+    <Preference
+        android:key="@string/key_clear_history"
+        android:title="@string/settings_clear_history_title"
+        android:summary="@string/settings_clear_history_summary" />
 </PreferenceScreen>

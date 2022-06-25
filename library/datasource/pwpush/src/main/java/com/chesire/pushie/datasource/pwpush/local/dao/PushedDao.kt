@@ -15,4 +15,7 @@ interface PushedDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: PushedEntity)
+
+    @Query("DELETE FROM PushedEntity")
+    suspend fun destroyTable()
 }
