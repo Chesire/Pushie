@@ -1,14 +1,27 @@
-package com.chesire.pushie.pusher
+package com.chesire.pushie.pusher.core
 
+import com.chesire.pushie.common.DateFormatter
 import com.chesire.pushie.datasource.pwpush.PWPushRepository
+import com.chesire.pushie.pusher.data.PusherDomain
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapEither
 import javax.inject.Inject
+import kotlinx.coroutines.flow.map
 
 /**
  * Interacts with the [PWPushRepository] to send up passwords and generate urls.
  */
-class PusherInteractor @Inject constructor(private val repository: PWPushRepository) {
+class PusherInteractor @Inject constructor(
+    private val repository: PWPushRepository,
+    private val dateFormatter: DateFormatter
+) {
+
+    /**
+     * Flow of models from the repository.
+     */
+    val models = repository.pushedModels.map { models ->
+        models.map { PusherDomain(dateFormatter.toDisplayDate(it.createdAt), it.url) }
+    }
 
     /**
      * Sends a new password to the API, and returns a [SendPasswordResult].

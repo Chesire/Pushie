@@ -16,4 +16,7 @@
     <string name="settings_title">Settings</string>
     <string name="settings_default_url_title">Pushie URL</string>
     <string name="settings_default_url_summary">Advanced: Set the url to use for the API</string>
+    <string name="settings_clear_history_title">Clear History</string>
+    <string name="settings_clear_history_summary">Clear any previously pushed model data</string>
+    <string name="settings_clear_history_finished">History has been cleared</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.chesire.pushie.pusher
+package com.chesire.pushie.pusher.core
 
 import android.content.ClipData
 import android.content.ClipboardManager

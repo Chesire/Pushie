@@ -2,4 +2,5 @@
 <resources>
     <string name="preference_file_name">PUSHIE_PREFERENCES</string>
     <string name="key_default_url" translatable="false">keyDefaultUrl</string>
+    <string name="key_clear_history" translatable="false">keyClearHistory</string>
 </resources>

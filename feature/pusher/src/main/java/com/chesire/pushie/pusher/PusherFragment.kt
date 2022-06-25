@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.chesire.pushie.compose.PushieTheme
+import com.chesire.pushie.pusher.ui.PusherScreen
+import com.chesire.pushie.pusher.ui.PusherViewModel
+import com.chesire.pushie.pusher.ui.ViewAction
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,11 +32,12 @@ class PusherFragment : Fragment() {
         setContent {
             PushieTheme {
                 PusherScreen(
-                    viewState = viewModel.viewState.observeAsState(),
-                    onPasswordChanged = { viewModel.execute(Action.PasswordChanged(it)) },
-                    onExpiryDaysChanged = { viewModel.execute(Action.ExpiryDaysChanged(it)) },
-                    onExpiryViewsChanged = { viewModel.execute(Action.ExpiryViewsChanged(it)) },
-                    onSendClicked = { viewModel.execute(Action.SubmitPassword) }
+                    viewState = viewModel.viewState.collectAsState(),
+                    onPasswordChanged = { viewModel.execute(ViewAction.PasswordChanged(it)) },
+                    onExpiryDaysChanged = { viewModel.execute(ViewAction.ExpiryDaysChanged(it)) },
+                    onExpiryViewsChanged = { viewModel.execute(ViewAction.ExpiryViewsChanged(it)) },
+                    onPreviousModelPressed = { viewModel.execute(ViewAction.PreviousModelPressed(it)) },
+                    onSendClicked = { viewModel.execute(ViewAction.SubmitPassword) }
                 )
             }
         }
