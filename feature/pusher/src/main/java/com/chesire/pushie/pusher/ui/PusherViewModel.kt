@@ -6,13 +6,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.pushie.common.getStateFlow
-import com.chesire.pushie.datasource.pwpush.remote.PushedModel
 import com.chesire.pushie.pusher.DAYS_PICKER_BUNDLE_KEY
 import com.chesire.pushie.pusher.PW_KEY
 import com.chesire.pushie.pusher.R
 import com.chesire.pushie.pusher.VIEWS_PICKER_BUNDLE_KEY
 import com.chesire.pushie.pusher.core.ClipboardInteractor
 import com.chesire.pushie.pusher.core.PusherInteractor
+import com.chesire.pushie.pusher.data.PusherDomain
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.hadilq.liveevent.LiveEvent
@@ -78,7 +78,7 @@ class PusherViewModel @Inject constructor(
             is ViewAction.ExpiryViewsChanged -> {
                 viewState.value = _viewState.copy(expiryViews = viewAction.newViews)
             }
-            is ViewAction.PushedModelPressed -> handlePushedModelPressed(viewAction.model)
+            is ViewAction.PreviousModelPressed -> handlePreviousModelPressed(viewAction.domain)
             is ViewAction.SubmitPassword -> sendApiRequest(
                 _viewState.passwordText,
                 _viewState.expiryDays,
@@ -108,8 +108,8 @@ class PusherViewModel @Inject constructor(
         }
     }
 
-    private fun handlePushedModelPressed(model: PushedModel) {
-        clipboardInteractor.copyToClipboard(model.url)
+    private fun handlePreviousModelPressed(domain: PusherDomain) {
+        clipboardInteractor.copyToClipboard(domain.url)
         _apiState.postValue(ApiResult.Success)
     }
 }

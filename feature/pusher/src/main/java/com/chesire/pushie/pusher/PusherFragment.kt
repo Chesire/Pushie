@@ -36,7 +36,7 @@ class PusherFragment : Fragment() {
                     onPasswordChanged = { viewModel.execute(ViewAction.PasswordChanged(it)) },
                     onExpiryDaysChanged = { viewModel.execute(ViewAction.ExpiryDaysChanged(it)) },
                     onExpiryViewsChanged = { viewModel.execute(ViewAction.ExpiryViewsChanged(it)) },
-                    onPushedModelPressed = { viewModel.execute(ViewAction.PushedModelPressed(it)) },
+                    onPreviousModelPressed = { viewModel.execute(ViewAction.PreviousModelPressed(it)) },
                     onSendClicked = { viewModel.execute(ViewAction.SubmitPassword) }
                 )
             }

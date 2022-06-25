@@ -44,8 +44,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chesire.pushie.compose.components.PushieText
-import com.chesire.pushie.datasource.pwpush.remote.PushedModel
 import com.chesire.pushie.pusher.R
+import com.chesire.pushie.pusher.data.PusherDomain
 
 @Composable
 fun PusherScreen(
@@ -53,7 +53,7 @@ fun PusherScreen(
     onPasswordChanged: (String) -> Unit,
     onExpiryDaysChanged: (Int) -> Unit,
     onExpiryViewsChanged: (Int) -> Unit,
-    onPushedModelPressed: (PushedModel) -> Unit,
+    onPreviousModelPressed: (PusherDomain) -> Unit,
     onSendClicked: () -> Unit
 ) {
     val state = requireNotNull(viewState.value)
@@ -70,7 +70,7 @@ fun PusherScreen(
         } else {
             SendButton(onSendClicked)
         }
-        PreviousModelsList(state.previousModels, onPushedModelPressed)
+        PreviousModelsList(state.previousModels, onPreviousModelPressed)
     }
 }
 
@@ -187,17 +187,18 @@ private fun SendButton(onSendClicked: () -> Unit) {
 
 @Composable
 private fun PreviousModelsList(
-    models: List<PushedModel>,
-    onPushedModelPressed: (PushedModel) -> Unit
+    models: List<PusherDomain>,
+    onPreviousModelPressed: (PusherDomain) -> Unit
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp),
+        reverseLayout = true,
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
     ) {
         items(models) {
-            TextButton(onClick = { onPushedModelPressed(it) }) {
+            TextButton(onClick = { onPreviousModelPressed(it) }) {
                 Column {
                     Text(text = it.createdAt, fontSize = 12.sp)
                     Text(text = it.url, fontSize = 14.sp)
@@ -215,7 +216,7 @@ private fun Preview() {
         expiryDays = 7,
         expiryViews = 5,
         isLoading = false,
-        previousModels = listOf(PushedModel("createdAt", "https://pwpush.com/p/"))
+        previousModels = listOf(PusherDomain("createdAt", "https://pwpush.com/p/"))
     )
     val state = produceState(
         initialValue = viewState,

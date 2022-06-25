@@ -1,7 +1,7 @@
 package com.chesire.pushie.pusher.ui
 
 import android.os.Parcelable
-import com.chesire.pushie.datasource.pwpush.remote.PushedModel
+import com.chesire.pushie.pusher.data.PusherDomain
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -13,5 +13,5 @@ data class ViewState(
     val expiryDays: Int,
     val expiryViews: Int,
     val isLoading: Boolean,
-    val previousModels: List<PushedModel>
+    val previousModels: List<PusherDomain>
 ) : Parcelable
