@@ -65,7 +65,7 @@ class PusherViewModel @Inject constructor(
     }
 
     /**
-     * Execute an [viewAction] on the ViewModel.
+     * Execute a [viewAction] on the ViewModel.
      */
     fun execute(viewAction: ViewAction) {
         when (viewAction) {
