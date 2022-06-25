@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.chesire.pushie.compose.PushieTheme
+import com.chesire.pushie.pusher.ui.PusherScreen
 import com.chesire.pushie.pusher.ui.PusherViewModel
 import com.chesire.pushie.pusher.ui.ViewAction
 import com.google.android.material.snackbar.Snackbar
@@ -35,6 +36,7 @@ class PusherFragment : Fragment() {
                     onPasswordChanged = { viewModel.execute(ViewAction.PasswordChanged(it)) },
                     onExpiryDaysChanged = { viewModel.execute(ViewAction.ExpiryDaysChanged(it)) },
                     onExpiryViewsChanged = { viewModel.execute(ViewAction.ExpiryViewsChanged(it)) },
+                    onPushedModelPressed = { viewModel.execute(ViewAction.PushedModelPressed(it)) },
                     onSendClicked = { viewModel.execute(ViewAction.SubmitPassword) }
                 )
             }

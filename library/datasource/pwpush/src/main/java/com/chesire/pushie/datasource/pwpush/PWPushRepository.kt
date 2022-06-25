@@ -28,7 +28,7 @@ class PWPushRepository @Inject constructor(
         .flowAll()
         .map { entities ->
             entities.map { entity ->
-                PushedModel(entity.createdAt, entity.id)
+                PushedModel(entity.createdAt, entity.url)
             }
         }
 

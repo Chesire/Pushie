@@ -1,5 +1,6 @@
-package com.chesire.pushie.pusher
+package com.chesire.pushie.pusher.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
@@ -7,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
@@ -19,6 +19,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Slider
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -41,9 +42,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.chesire.pushie.compose.components.PushieText
 import com.chesire.pushie.datasource.pwpush.remote.PushedModel
-import com.chesire.pushie.pusher.ui.ViewState
+import com.chesire.pushie.pusher.R
 
 @Composable
 fun PusherScreen(
@@ -51,16 +53,14 @@ fun PusherScreen(
     onPasswordChanged: (String) -> Unit,
     onExpiryDaysChanged: (Int) -> Unit,
     onExpiryViewsChanged: (Int) -> Unit,
+    onPushedModelPressed: (PushedModel) -> Unit,
     onSendClicked: () -> Unit
 ) {
     val state = requireNotNull(viewState.value)
-    val scrollState = rememberScrollState()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(16.dp)
-        //.verticalScroll(scrollState)
+        modifier = Modifier.padding(16.dp)
     ) {
         PasswordInput(state.passwordText, onPasswordChanged, onSendClicked)
         DaysInput(state.expiryDays, onExpiryDaysChanged)
@@ -70,7 +70,7 @@ fun PusherScreen(
         } else {
             SendButton(onSendClicked)
         }
-        PreviousModelsList(state.previousModels)
+        PreviousModelsList(state.previousModels, onPushedModelPressed)
     }
 }
 
@@ -186,10 +186,23 @@ private fun SendButton(onSendClicked: () -> Unit) {
 }
 
 @Composable
-private fun PreviousModelsList(models: List<PushedModel>) {
-    LazyColumn {
+private fun PreviousModelsList(
+    models: List<PushedModel>,
+    onPushedModelPressed: (PushedModel) -> Unit
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
         items(models) {
-            Text(text = it.url)
+            TextButton(onClick = { onPushedModelPressed(it) }) {
+                Column {
+                    Text(text = it.createdAt, fontSize = 12.sp)
+                    Text(text = it.url, fontSize = 14.sp)
+                }
+            }
         }
     }
 }
@@ -202,7 +215,7 @@ private fun Preview() {
         expiryDays = 7,
         expiryViews = 5,
         isLoading = false,
-        previousModels = emptyList()
+        previousModels = listOf(PushedModel("createdAt", "https://pwpush.com/p/"))
     )
     val state = produceState(
         initialValue = viewState,
@@ -210,5 +223,5 @@ private fun Preview() {
             value = viewState
         }
     )
-    PusherScreen(viewState = state, { /* */ }, { /* */ }, { /* */ }, { /* */ })
+    PusherScreen(viewState = state, { /* */ }, { /* */ }, { /* */ }, { /* */ }, { /* */ })
 }
