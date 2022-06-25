@@ -3,6 +3,9 @@ package com.chesire.pushie.pusher.data
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Domain object for use within the Pusher module.
+ */
 @Parcelize
 data class PusherDomain(
     /**
