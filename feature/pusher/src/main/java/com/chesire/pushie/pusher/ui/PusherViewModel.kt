@@ -69,15 +69,15 @@ class PusherViewModel @Inject constructor(
      */
     fun execute(viewAction: ViewAction) {
         when (viewAction) {
-            is ViewAction.PasswordChanged -> {
-                viewState.value = _viewState.copy(passwordText = viewAction.newPassword)
-            }
-            is ViewAction.ExpiryDaysChanged -> {
-                viewState.value = _viewState.copy(expiryDays = viewAction.newDays)
-            }
-            is ViewAction.ExpiryViewsChanged -> {
-                viewState.value = _viewState.copy(expiryViews = viewAction.newViews)
-            }
+            is ViewAction.PasswordChanged -> viewState.value = _viewState.copy(
+                passwordText = viewAction.newPassword
+            )
+            is ViewAction.ExpiryDaysChanged -> viewState.value = _viewState.copy(
+                expiryDays = viewAction.newDays
+            )
+            is ViewAction.ExpiryViewsChanged -> viewState.value = _viewState.copy(
+                expiryViews = viewAction.newViews
+            )
             is ViewAction.PreviousModelPressed -> handlePreviousModelPressed(viewAction.domain)
             is ViewAction.SubmitPassword -> sendApiRequest(
                 _viewState.passwordText,
