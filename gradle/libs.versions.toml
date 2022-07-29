@@ -1,7 +1,7 @@
 [versions]
 compose = "1.1.1"
 coroutines = "1.6.4"
-hilt = "2.43"
+hilt = "2.43.1"
 lifecycle = "2.5.1"
 room = "2.4.2"
 
