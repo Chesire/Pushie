@@ -6,10 +6,10 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 32
     defaultConfig {
         minSdk = 21
-        targetSdk = 31
+        targetSdk = 32
         applicationId = "com.chesire.pushie"
         versionCode = 13
         versionName = "2.2.0"
@@ -30,7 +30,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0"
+        kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
 }
 
