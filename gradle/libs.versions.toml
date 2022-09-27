@@ -6,7 +6,7 @@ lifecycle = "2.5.1"
 room = "2.4.3"
 
 [libraries]
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.4.2" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.5.1" }
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 androidx-compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
 androidx-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
