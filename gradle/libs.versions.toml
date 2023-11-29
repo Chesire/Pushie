@@ -3,7 +3,7 @@ compose = "1.2.0"
 coroutines = "1.6.4"
 hilt = "2.44.2"
 lifecycle = "2.5.1"
-room = "2.4.3"
+room = "2.6.1"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.5.1" }
