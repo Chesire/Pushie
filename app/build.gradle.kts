@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 34
     defaultConfig {
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 34
         applicationId = "com.chesire.pushie"
-        versionCode = 13
-        versionName = "2.2.0"
+        versionCode = 14
+        versionName = "2.2.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         resourceConfigurations.addAll(listOf("en", "ja"))
     }
