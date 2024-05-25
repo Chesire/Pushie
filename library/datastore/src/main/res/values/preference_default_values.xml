@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="default_default_url" translatable="false">https://pwpush.com/p</string>
+    <integer name="default_default_days" translatable="false">7</integer>
+    <integer name="default_default_views" translatable="false">5</integer>
 </resources>

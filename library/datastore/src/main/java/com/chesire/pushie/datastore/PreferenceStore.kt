@@ -11,16 +11,34 @@ class PreferenceStore @Inject constructor(@ApplicationContext context: Context) 
         context.getString(R.string.preference_file_name),
         MODE_PRIVATE
     )
-    private val _pushieUrlModel = PreferenceModel(
+    private val _pushieUrlModel = PreferenceStringModel(
         context.getString(R.string.key_default_url),
         context.getString(R.string.default_default_url)
     )
+    private val _defaultDaysTillExpiry = PreferenceIntModel(
+        context.getString(R.string.key_default_days),
+        context.resources.getInteger(R.integer.default_default_days)
+    )
+    private val _defaultViewsTillExpiry = PreferenceIntModel(
+        context.getString(R.string.key_default_views),
+        context.resources.getInteger(R.integer.default_default_views)
+    )
 
     val pushieUrl: String
-        get() = preferences.getPreference(_pushieUrlModel)
+        get() = preferences.getString(_pushieUrlModel)
 
-    private fun SharedPreferences.getPreference(model: PreferenceModel): String =
+    val defaultDaysTillExpiry: Int
+        get() = preferences.getInt(_defaultDaysTillExpiry)
+
+    val defaultViewsTillExpiry: Int
+        get() = preferences.getInt(_defaultViewsTillExpiry)
+
+    private fun SharedPreferences.getString(model: PreferenceStringModel): String =
         getString(model.key, model.defaultValue) ?: model.defaultValue
+
+    private fun SharedPreferences.getInt(model: PreferenceIntModel): Int =
+        getString(model.key, model.defaultValue.toString())?.toIntOrNull() ?: model.defaultValue
 }
 
-private data class PreferenceModel(val key: String, val defaultValue: String)
+private data class PreferenceStringModel(val key: String, val defaultValue: String)
+private data class PreferenceIntModel(val key: String, val defaultValue: Int)
