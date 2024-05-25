@@ -19,7 +19,7 @@ androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmode
 androidx-room = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-androidx-preference = { module = "androidx.preference:preference-ktx", version = "1.2.0" }
+androidx-preference = { module = "androidx.preference:preference-ktx", version = "1.2.1" }
 google-material = { module = "com.google.android.material:material", version = "1.7.0" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"}
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt"}
