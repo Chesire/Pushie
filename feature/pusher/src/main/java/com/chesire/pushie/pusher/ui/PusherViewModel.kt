@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.pushie.common.getStateFlow
+import com.chesire.pushie.datastore.PreferenceStore
 import com.chesire.pushie.pusher.DAYS_PICKER_BUNDLE_KEY
 import com.chesire.pushie.pusher.PW_KEY
 import com.chesire.pushie.pusher.R
@@ -29,7 +30,8 @@ private const val STATE_KEY = "PUSHER_STATE_KEY"
 class PusherViewModel @Inject constructor(
     state: SavedStateHandle,
     private val pushInteractor: PusherInteractor,
-    private val clipboardInteractor: ClipboardInteractor
+    private val clipboardInteractor: ClipboardInteractor,
+    private val preferenceStore: PreferenceStore
 ) : ViewModel() {
 
     private val _apiState = LiveEvent<ApiResult>()
@@ -47,8 +49,8 @@ class PusherViewModel @Inject constructor(
         viewModelScope,
         ViewState(
             passwordText = state.get<String>(PW_KEY) ?: "",
-            expiryDays = state.get<Int>(DAYS_PICKER_BUNDLE_KEY) ?: 7,
-            expiryViews = state.get<Int>(VIEWS_PICKER_BUNDLE_KEY) ?: 5,
+            expiryDays = state.get<Int>(DAYS_PICKER_BUNDLE_KEY) ?: preferenceStore.defaultDaysTillExpiry,
+            expiryViews = state.get<Int>(VIEWS_PICKER_BUNDLE_KEY) ?: preferenceStore.defaultViewsTillExpiry,
             isLoading = false,
             previousModels = emptyList()
         )

@@ -6,6 +6,22 @@
         android:summary="@string/settings_default_url_summary"
         android:title="@string/settings_default_url_title" />
 
+    <EditTextPreference
+        android:defaultValue="@integer/default_default_days"
+        android:key="@string/key_default_days"
+        android:summary="@string/settings_default_days_summary"
+        android:title="@string/settings_default_days_title"
+        android:inputType="numberDecimal"
+        android:digits="0123456789" />
+
+    <EditTextPreference
+        android:defaultValue="@integer/default_default_views"
+        android:key="@string/key_default_views"
+        android:summary="@string/settings_default_views_summary"
+        android:title="@string/settings_default_views_title"
+        android:inputType="numberDecimal"
+        android:digits="0123456789" />
+
     <Preference
         android:key="@string/key_clear_history"
         android:title="@string/settings_clear_history_title"

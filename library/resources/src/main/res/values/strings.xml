@@ -16,6 +16,10 @@
     <string name="settings_title">Settings</string>
     <string name="settings_default_url_title">Pushie URL</string>
     <string name="settings_default_url_summary">Advanced: Set the url to use for the API</string>
+    <string name="settings_default_days_title">Default days till expiry</string>
+    <string name="settings_default_days_summary">Set the default amount of days until the password expires. Max: 90</string>
+    <string name="settings_default_views_title">Default views till expiry</string>
+    <string name="settings_default_views_summary">Set the default amount of views until the password expires. Max: 100</string>
     <string name="settings_clear_history_title">Clear History</string>
     <string name="settings_clear_history_summary">Clear any previously pushed model data</string>
     <string name="settings_clear_history_finished">History has been cleared</string>
