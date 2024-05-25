@@ -11,8 +11,8 @@ android {
         minSdk = 21
         targetSdk = 34
         applicationId = "com.chesire.pushie"
-        versionCode = 14
-        versionName = "2.2.1"
+        versionCode = 15
+        versionName = "2.3.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         resourceConfigurations.addAll(listOf("en", "ja"))
     }
