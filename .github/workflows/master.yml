@@ -5,30 +5,24 @@ on:
     branches: [ master ]
 
 jobs:
-  assemble:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'adopt'
-        java-version: 11
-    - name: run assemble
-      run: ./gradlew assemble
-
-  analyze:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'adopt'
-        java-version: 11
-    - name: run ktlintCheck
-      run: ./gradlew ktlintCheck
-    - name: run lintDebug
-      run: ./gradlew lintDebug
-    - name: run detektCheck
-      run: ./gradlew detektCheck
+      - uses: actions/checkout@v4
+      - name: set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: 17
+      - name: setup gradle cache
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: false
+      - name: run assemble
+        run: ./gradlew assemble
+      - name: run ktlintCheck
+        run: ./gradlew ktlintCheck
+      - name: run lintDebug
+        run: ./gradlew lintDebug
+      - name: run detektCheck
+        run: ./gradlew detektCheck
