@@ -2,7 +2,7 @@
 compose = "1.2.0"
 coroutines = "1.6.4"
 hilt = "2.44.2"
-lifecycle = "2.5.1"
+lifecycle = "2.8.6"
 room = "2.6.1"
 
 [libraries]
