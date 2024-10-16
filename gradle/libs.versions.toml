@@ -1,5 +1,5 @@
 [versions]
-compose = "1.2.0"
+compose = "1.7.4"
 coroutines = "1.6.4"
 hilt = "2.44.2"
 lifecycle = "2.5.1"
