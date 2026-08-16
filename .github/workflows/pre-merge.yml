@@ -67,7 +67,7 @@ jobs:
           fetch-depth: 100
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '2.7.8'
           bundler-cache: true
       - name: download lint results
         uses: actions/download-artifact@v3
